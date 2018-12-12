@@ -1,0 +1,125 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:20:1-52:12
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:20:1-52:12
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:20:1-52:12
+MERGED from [com.android.support:support-v13:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v13-27.0.2.aar/45f25a36bb152fae5e6f3886ed7c4120/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-v4:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/6b4736ffcf516f5f63432bcbc948e9ba/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/50fa043701ba8a040a103b7cbe95d03b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/c388e8290b6924fdb59a5719f400adb0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/e63474fe5728ffeb53d3bdb88c0329f1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/b29800b073fd149392b7bdd2b0db5724/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/db0ab56a9682b43c18c501b4af7cbc80/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/e0a4c24e36a3a106bafd6527c413a564/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.0.3] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/61624ceb953a271d83d89eba7b246519/AndroidManifest.xml:17:1-24:12
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:20:1-52:12
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:20:1-52:12
+	package
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:21:5-50
+	android:versionName
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:23:5-30
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:20:11-69
+	android:versionCode
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:22:5-28
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+uses-feature#android.hardware.bluetooth_le
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:31:5-89
+	android:required
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:31:64-87
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:31:19-63
+uses-permission#android.permission.BLUETOOTH
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:33:5-67
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:33:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:34:5-73
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:34:22-71
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:35:5-79
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:35:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:36:5-81
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:36:22-78
+application
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:38:5-50:19
+	android:label
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:38:18-50
+	android:icon
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:39:9-45
+	android:theme
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:40:9-56
+activity#com.example.android.bluetoothlegatt.DeviceScanActivity
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:41:9-47:20
+	android:label
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:42:13-45
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:41:19-53
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:43:13-46:29
+action#android.intent.action.MAIN
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:44:17-68
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:44:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:45:17-76
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:45:27-74
+activity#com.example.android.bluetoothlegatt.DeviceControlActivity
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:48:9-58
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:48:19-56
+service#com.example.android.bluetoothlegatt.BluetoothLeService
+ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:49:9-77
+	android:enabled
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:49:53-75
+	android:name
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml:49:18-52
+uses-sdk
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+MERGED from [com.android.support:support-v13:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v13-27.0.2.aar/45f25a36bb152fae5e6f3886ed7c4120/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v13:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v13-27.0.2.aar/45f25a36bb152fae5e6f3886ed7c4120/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/6b4736ffcf516f5f63432bcbc948e9ba/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/6b4736ffcf516f5f63432bcbc948e9ba/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/50fa043701ba8a040a103b7cbe95d03b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/50fa043701ba8a040a103b7cbe95d03b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/c388e8290b6924fdb59a5719f400adb0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/c388e8290b6924fdb59a5719f400adb0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/e63474fe5728ffeb53d3bdb88c0329f1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/e63474fe5728ffeb53d3bdb88c0329f1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/b29800b073fd149392b7bdd2b0db5724/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/b29800b073fd149392b7bdd2b0db5724/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/db0ab56a9682b43c18c501b4af7cbc80/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/db0ab56a9682b43c18c501b4af7cbc80/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/e0a4c24e36a3a106bafd6527c413a564/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/e0a4c24e36a3a106bafd6527c413a564/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.0.3] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/61624ceb953a271d83d89eba7b246519/AndroidManifest.xml:20:5-22:41
+MERGED from [android.arch.lifecycle:runtime:1.0.3] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/61624ceb953a271d83d89eba7b246519/AndroidManifest.xml:20:5-22:41
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+		ADDED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml
+		INJECTED from /home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/src/main/AndroidManifest.xml

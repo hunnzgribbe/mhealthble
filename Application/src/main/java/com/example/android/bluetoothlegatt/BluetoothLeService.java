@@ -33,7 +33,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -47,6 +49,12 @@ public class BluetoothLeService extends Service {
     private BluetoothAdapter mBluetoothAdapter;
     private String mBluetoothDeviceAddress;
     private BluetoothGatt mBluetoothGatt;
+
+    public BluetoothLeServiceWeight weightObject;
+    private DBHelper mydb;
+    private int from_Where_I_Am_Coming = 0;
+    private int id_To_Update = 0;
+
     private int mConnectionState = STATE_DISCONNECTED;
 
     private static final int STATE_DISCONNECTED = 0;
@@ -80,6 +88,9 @@ public class BluetoothLeService extends Service {
 
     public final static UUID UUID_BLOOD_PRESSURE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
+
+
+
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -142,7 +153,20 @@ public class BluetoothLeService extends Service {
 
         //Call Method for getting the values of the characterstic and save them
         //intent.putExtra(EXTRA_DATA, readValues(characteristic));
-        readValues(intent, characteristic);
+        BluetoothLeServiceWeight weightObject = new BluetoothLeServiceWeight();
+        weightObject.setDATE(getCurrentDate());
+        weightObject.readValues(intent, characteristic);
+
+
+
+        //Save read values in db
+
+
+
+        //readValues(intent, characteristic);
+
+
+
         sendBroadcast(intent);
 
     }
@@ -328,6 +352,25 @@ public class BluetoothLeService extends Service {
         if (mBluetoothGatt == null) return null;
 
         return mBluetoothGatt.getServices();
+    }
+
+    /**
+     * Get the current date
+     *
+     *
+     *
+     */
+    public String getCurrentDate(){
+        String date = "";
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        date = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + ".";
+        date += Integer.toString(calendar.get(Calendar.MONTH)) + ".";
+        date += Integer.toString(calendar.get(Calendar.YEAR)) + ";";
+        date += Integer.toString(calendar.get(Calendar.HOUR)) + ":";
+        date += Integer.toString(calendar.get(Calendar.MINUTE)) + ":";
+        date += Integer.toString(calendar.get(Calendar.SECOND));
+
+        return date;
     }
 
 

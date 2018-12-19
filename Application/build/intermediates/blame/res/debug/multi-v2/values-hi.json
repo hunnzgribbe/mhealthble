@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/hunnzgribbe/Downloads/Apps/Neu/BluetoothLeGatt/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hi/values-hi.xml",
+            "outputFile": "/home/hunnzgribbe/mhealthble/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hi/values-hi.xml",
             "map": [
                 {
                     "source": "/home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/res/values-hi/values-hi.xml",

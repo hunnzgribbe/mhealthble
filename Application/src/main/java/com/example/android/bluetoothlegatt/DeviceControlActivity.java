@@ -58,7 +58,9 @@ public class DeviceControlActivity extends Activity {
 
     //Neu:
     private TextView mDeviceValues;
-    private String mDeviceValuestemp;
+    private DBHelper mydb;
+    private int from_Where_I_Am_Coming = 0;
+    private int id_To_Update = 0;
 
     private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
@@ -121,6 +123,8 @@ public class DeviceControlActivity extends Activity {
                 displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_DIASTOLIC));
                 displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_MAP));
                 displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_PULSE));
+
+
             }
 
 

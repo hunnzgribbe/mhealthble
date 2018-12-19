@@ -27,6 +27,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Activity for scanning and displaying available Bluetooth LE devices.
+ * Main Activity for scanning and displaying available Bluetooth LE devices.
  */
 public class DeviceScanActivity extends ListActivity {
     private LeDeviceListAdapter mLeDeviceListAdapter;
@@ -58,11 +59,21 @@ public class DeviceScanActivity extends ListActivity {
     private static final int REQUEST_PERMISSION_ENABLE_BT = 1;
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
+    DBHelper mydb;
+    public int id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setTitle(R.string.title_devices);
+        mydb = new DBHelper(this);
+        //Check if application has already an created user
+        checkFirstRun();
+
+
+
+
+        //ArrayList array_list = mydb.getAllMhealthUsers();
         mHandler = new Handler();
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
@@ -92,6 +103,40 @@ public class DeviceScanActivity extends ListActivity {
             marshMallowCheck();
         }
     }
+
+    //Check if application was ever started -> If not, force to make a new user
+    private void checkFirstRun() {
+
+        final String PREFS_NAME = "MyPrefsFile";
+        //Set here the Build version from Androidmanifest
+        final String PREF_VERSION_CODE_KEY = "1";
+        final int DOESNT_EXIST = -1;
+        // Get current version code
+        int currentVersionCode = BuildConfig.VERSION_CODE;
+        // Get saved version code
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
+
+        // Check for first run or upgrade
+        if (currentVersionCode == savedVersionCode) {
+            // This is just a normal run, do nothing
+            return;
+
+        } else if (savedVersionCode == DOESNT_EXIST) {
+            // TODO This is a new install (or the user cleared the shared preferences)
+            //Open new View for creating user and db
+            Intent intent = new Intent(this, UserAddActivity.class);
+            this.startActivity(intent);
+            return;
+
+        } else if (currentVersionCode > savedVersionCode) {
+            // TODO This is an upgrade
+            return;
+        }
+        // Update the shared preferences with the current version code
+        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
+    }
+
 
     //-----------------------------------------------------------------------------------------------
     //Location Permission Message starting from Marshmallow:
@@ -199,21 +244,27 @@ public class DeviceScanActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
         if (!mScanning) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(true);
+            menu.findItem(R.id.menu_setting).setVisible(true);
             menu.findItem(R.id.menu_refresh).setActionView(null);
         } else {
             menu.findItem(R.id.menu_stop).setVisible(true);
             menu.findItem(R.id.menu_scan).setVisible(false);
+            menu.findItem(R.id.menu_setting).setVisible(true);
             menu.findItem(R.id.menu_refresh).setActionView(
                     R.layout.actionbar_indeterminate_progress);
         }
+
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.menu_scan:
                 mLeDeviceListAdapter.clear();
@@ -221,6 +272,10 @@ public class DeviceScanActivity extends ListActivity {
                 break;
             case R.id.menu_stop:
                 scanLeDevice(false);
+                break;
+            case R.id.menu_setting:
+                Intent intent = new Intent(this, UserActivity.class);
+                this.startActivity(intent);
                 break;
         }
         return true;
@@ -265,11 +320,15 @@ public class DeviceScanActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+
+
         final BluetoothDevice device = mLeDeviceListAdapter.getDevice(position);
         if (device == null) return;
         final Intent intent = new Intent(this, DeviceControlActivity.class);
         intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
         intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+
+
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;

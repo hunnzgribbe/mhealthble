@@ -19,12 +19,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String MHEALTHUSERS_COLUMN_ID = "id";
     public static final String MHEALTHUSERS_COLUMN_EMAIL = "email";
     public static final String MHEALTHUSERS_COLUMN_WEIGHT_UNIT = "weightunit";
-    public static final Double MHEALTHUSERS_COLUMN_WEIGHT_VALUE = 0.0;
-    public static final Double MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_SYSTOLIC = 0.0;
-    public static final Double MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_DIASTOLIC = 0.0;
-    public static final Double MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_MAP = 0.0;
-    public static final Double MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_PULSE = 0.0;
+    public static final String MHEALTHUSERS_COLUMN_WEIGHT_VALUE = "weightvalue";
+    public static final String MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_UNIT = "bpunit";
+    public static final String MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_SYSTOLIC = "systolic";
+    public static final String MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_DIASTOLIC = "diastolic";
+    public static final String MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_MAP = "map";
+    public static final String MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_PULSE = "pulse";
     public static final String MHEALTHUSERS_COLUMN_LAST_READ_TIME = "date";
+
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
@@ -35,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table mhealthusers " +
-                        "(id integer primary key, email text,weightunit text,weightvalue double, systolic double, diastolic double, map double, pulse double, date text)"
+                        "(id integer primary key, email text ,weightunit text,weightvalue text, bpunit text, systolic text, diastolic text, map text, pulse text, date text)"
         );
     }
 
@@ -46,17 +48,18 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertMhealthUser (String email, String weightunit, double weightvalue, double systolic, double diastolic, double map, double pulse) {
+    public boolean insertMhealthUser (String email, String weightunit, String weightvalue, String bpunit, String systolic, String diastolic, String map, String pulse, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("weightunit", weightunit);
         contentValues.put("weightvalue", weightvalue);
+        contentValues.put("bpunit", bpunit);
         contentValues.put("systolic", systolic);
         contentValues.put("diastolic", diastolic);
         contentValues.put("map", map);
         contentValues.put("pulse", pulse);
-
+        contentValues.put("date", date);
         db.insert("mhealthusers", null, contentValues);
         return true;
     }
@@ -69,9 +72,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+
     public Cursor getData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from mhealthusers where id="+id+"", null );
+        //Cursor res =  db.rawQuery( "select * from mhealthusers where id="+id+"", null );
+        Cursor res =  db.rawQuery( "select * from mhealthusers where id=?", new String[] { Integer.toString(id) } );
         return res;
     }
 
@@ -82,12 +87,13 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean updateMhealthUser (Integer id, String email, String weightunit, double weightvalue, double systolic, double diastolic, double map, double pulse) {
+    public boolean updateMhealthUser (Integer id, String email, String weightunit, String weightvalue, String bpunit, String systolic, String diastolic, String map, String pulse) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("weightunit", weightunit);
         contentValues.put("weightvalue", weightvalue);
+        contentValues.put("bpunit", bpunit);
         contentValues.put("systolic", systolic);
         contentValues.put("diastolic", diastolic);
         contentValues.put("map", map);
@@ -104,7 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateMhealthUserWeight (Integer id, String weightunit, Double weightvalue) {
+    public boolean updateMhealthUserWeight (Integer id, String weightunit, String weightvalue) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("weightunit", weightunit);
@@ -113,9 +119,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateMhealthUserbpm (Integer id, double systolic, double diastolic, double map, double pulse) {
+    public boolean updateMhealthUserbpm (Integer id, String bpunit, String systolic, String diastolic, String map, String pulse) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put("bpunit", bpunit);
         contentValues.put("systolic", systolic);
         contentValues.put("diastolic", diastolic);
         contentValues.put("map", map);
@@ -155,5 +162,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
+    public Integer getLastUsersId() {
+        int id = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from mhealthusers", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            id = (res.getInt(res.getColumnIndex(MHEALTHUSERS_COLUMN_ID)));
+            res.moveToNext();
+        }
+        return id;
+    }
 
 }

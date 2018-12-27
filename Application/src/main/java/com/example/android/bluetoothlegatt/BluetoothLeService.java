@@ -52,8 +52,6 @@ public class BluetoothLeService extends Service {
 
     public BluetoothLeServiceWeight weightObject;
     private DBHelper mydb;
-    private int from_Where_I_Am_Coming = 0;
-    private int id_To_Update = 0;
 
     private int mConnectionState = STATE_DISCONNECTED;
 
@@ -119,6 +117,8 @@ public class BluetoothLeService extends Service {
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
+
+                //TODO Here get the data directly
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
@@ -151,21 +151,37 @@ public class BluetoothLeService extends Service {
         Log.v(TAG, "broadcastUpdate" + characteristic.getUuid());
         Log.v(TAG, "data is " + characteristic.getValue().toString());
 
-        //Call Method for getting the values of the characterstic and save them
-        //intent.putExtra(EXTRA_DATA, readValues(characteristic));
-        BluetoothLeServiceWeight weightObject = new BluetoothLeServiceWeight();
-        weightObject.setDATE(getCurrentDate());
-        weightObject.readValues(intent, characteristic);
 
+//TODO: Read and save A&DDevices
 
-
-        //Save read values in db
-
-
-
-        //readValues(intent, characteristic);
-
-
+        if (UUID_WEIGHT_MEASUREMENT.equals(characteristic.getUuid())) {
+            BluetoothLeServiceWeight weightObject = new BluetoothLeServiceWeight();
+            weightObject.setDATE(getCurrentDate());
+            weightObject.readValues(intent, characteristic);
+            //Save values in db
+            mydb = new DBHelper(this);
+            mydb.updateMhealthUserWeight(mydb.getLastUsersId(), weightObject.getWeightUnit(), weightObject.getWeightValue());
+        }
+        else if (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) {
+            BluetoothLeServiceBloodPressure bpObject = new BluetoothLeServiceBloodPressure();
+            bpObject.setDATE(getCurrentDate());
+            bpObject.readValues(intent, characteristic);
+            //Save values in db
+            mydb = new DBHelper(this);
+            mydb.updateMhealthUserbpm(mydb.getLastUsersId(), bpObject.getBP_UNIT(), bpObject.getBP_SYSTOLIC(), bpObject.getBP_DIASTOLIC(), bpObject.getBP_MAP(), bpObject.getBP_PULSE());
+        }
+        else {
+            // For all other profiles, writes the data formatted in HEX.
+            final byte[] data = characteristic.getValue();
+            if (data != null && data.length > 0) {
+                final StringBuilder stringBuilder = new StringBuilder(data.length);
+                for (byte byteChar : data)
+                    stringBuilder.append(String.format("%02X ", byteChar));
+                    intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
+                    mydb = new DBHelper(this);
+                    mydb.updateMhealthUserWeight(mydb.getLastUsersId(), "Unkown Device", stringBuilder.toString());
+            }
+        }
 
         sendBroadcast(intent);
 
@@ -354,6 +370,7 @@ public class BluetoothLeService extends Service {
         return mBluetoothGatt.getServices();
     }
 
+
     /**
      * Get the current date
      *
@@ -373,228 +390,5 @@ public class BluetoothLeService extends Service {
         return date;
     }
 
-
-    /**
-     * Get the values of the specific device
-     *
-     *
-     *
-     */
-
-    public void readValues (final Intent intent,
-                              final BluetoothGattCharacteristic characteristic){
-        //final Intent intent = new Intent(action);
-        // This is special handling for the Heart Rate Measurement profile.  Data parsing is
-        // carried out as per profile specifications:
-        // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-            int flag = characteristic.getProperties();
-            int format = -1;
-            if ((flag & 0x01) != 0) {
-                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-                Log.d(TAG, "Heart rate format UINT16.");
-            } else {
-                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-                Log.d(TAG, "Heart rate format UINT8.");
-            }
-            final int heartRate = characteristic.getIntValue(format, 1);
-            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-        }
-
-        //Data handling for weight scale:
-        else if (UUID_WEIGHT_MEASUREMENT.equals(characteristic.getUuid())) {
-
-            int flag = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-            String flagString = Integer.toBinaryString(flag);
-            int offset=0;
-            for(int index = flagString.length(); 0 < index ; index--) {
-                String key = flagString.substring(index-1 , index);
-
-                if(index == flagString.length()) {
-                    double convertValue = 0;
-                    if(key.equals("0")) {
-                        convertValue = 0.005f;
-                        intent.putExtra(WEIGHT_UNIT,"KG");
-                    }
-                    else {
-                        convertValue = 0.01f;
-                        intent.putExtra(WEIGHT_UNIT,"LBS");
-                    }
-                    // Unit
-                    offset+=1;
-
-                    // Value
-                    double value = (double)(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)) * convertValue;
-                    //Runden:
-                    value = Math.round(value*100)/100.0;
-                    intent.putExtra(EXTRA_DATA, Double.toString(value));
-                    intent.putExtra(WEIGHT_VALUE, Double.toString(value));
-                    Log.d("Weight", "V :" + value);
-                    offset+=2;
-                }
-                else if(index == flagString.length()-1) {
-                    if(key.equals("1")) {
-
-                        Log.d("SN", "Y :"+String.format("%04d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)));
-
-                        offset+=2;
-                        Log.d("SN", "M :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-
-                        offset+=1;
-                        Log.d("SN", "D :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-
-                        offset+=1;
-
-                        Log.d("SN", "H :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-
-                        offset+=1;
-                        Log.d("SN", "M :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-
-                        offset+=1;
-                        Log.d("SN", "S :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-
-                        offset+=1;
-                    }
-
-                }
-                else if(index == flagString.length()-2) {
-                    if(key.equals("1")) {
-                        Log.d("SN", "ID :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-                        offset+=1;
-                    }
-                }
-                else if(index == flagString.length()-3) {
-                    if(key.equals("1")) {
-                        // BMI and Height
-                    }
-                }
-            }
-
-        }
-
-        //Data handling for blood pressure device:
-        else if (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) {
-            //public final String[] WEIGHT_SCALE = {"Unit:", "", "Value:", ""}
-            //"Unit:", "", "Systolic:", "", "Diastolic:", "", "Mean Arterial Pressure:", "", "Pulse:", ""};
-            int flag = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-            String flagString = Integer.toBinaryString(flag);
-            int offset=0;
-            for(int index = flagString.length(); 0 < index ; index--) {
-                String key = flagString.substring(index-1 , index);
-
-                if(index == flagString.length()) {
-                    if(key.equals("0")) {
-                        // mmHg
-                        Log.d("SN", "mmHg");
-                        intent.putExtra(BLOOD_PRESSURE_UNIT,"mmHg");
-                    }
-                    else {
-                        // kPa
-                        Log.d("SN", "kPa");
-                        intent.putExtra(BLOOD_PRESSURE_UNIT,"kPa");
-                    }
-                    // Unit
-                    offset+=1;
-                    Log.d("SN", "Systolic :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
-                    intent.putExtra(BLOOD_PRESSURE_SYSTOLIC, Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0));
-                    offset+=2;
-                    Log.d("SN", "Diastolic :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
-                    intent.putExtra(BLOOD_PRESSURE_DIASTOLIC, Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0));
-                    offset+=2;
-                    Log.d("SN", "Mean Arterial Pressure :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
-                    intent.putExtra(BLOOD_PRESSURE_MAP, Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0));
-                    offset+=2;
-                }
-                else if(index == flagString.length()-1) {
-                    if(key.equals("1")) {
-                        // Time Stamp
-                        Log.d("SN", "Y :"+String.format("%04d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)));
-                        offset+=2;
-                        Log.d("SN", "M :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-                        offset+=1;
-                        Log.d("SN", "D :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-                        offset+=1;
-
-                        Log.d("SN", "H :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-                        offset+=1;
-                        Log.d("SN", "M :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-                        offset+=1;
-                        Log.d("SN", "S :"+String.format("%02d", characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)));
-                        offset+=1;
-                    }
-                   /* else {
-                        // 日時が存在しない場合、現在日時を格納する。
-                        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-                        bundle.putInt(KEY_YEAR, calendar.get(Calendar.YEAR));
-                        bundle.putInt(KEY_MONTH, calendar.get(Calendar.MONTH)+1);
-                        bundle.putInt(KEY_DAY, calendar.get(Calendar.DAY_OF_MONTH));
-                        bundle.putInt(KEY_HOURS, calendar.get(Calendar.HOUR));
-                        bundle.putInt(KEY_MINUTES, calendar.get(Calendar.MINUTE));
-                        bundle.putInt(KEY_SECONDS, calendar.get(Calendar.SECOND));
-                    }*/
-                }
-                else if(index == flagString.length()-2) {
-                    if(key.equals("1")) {
-                        // Pulse Rate
-                        Log.d("SN", "Pulse Rate :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
-                        intent.putExtra(BLOOD_PRESSURE_PULSE, Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0));
-                        offset+=2;
-                    }
-                }
-                else if(index == flagString.length()-3) {
-                    // UserID
-                }
-              /*  else if(index == flagString.length()-4) {
-                    // Measurement Status Flag
-                    int statusFalg = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-                    String statusFlagString = Integer.toBinaryString(statusFalg);
-                    for(int i = statusFlagString.length(); 0 < i ; i--) {
-                        String status = statusFlagString.substring(i-1 , i);
-                        if(i == statusFlagString.length()) {
-                            bundle.putInt(KEY_BODY_MOVEMENT_DETECTION, (status.endsWith("1"))? 1 : 0 );
-                        }
-                        else if(i == statusFlagString.length() - 1) {
-                            bundle.putInt(KEY_CUFF_FIT_DETECTION, (status.endsWith("1"))? 1 : 0 );
-                        }
-                        else if(i == statusFlagString.length() - 2) {
-                            bundle.putInt(KEY_IRREGULAR_PULSE_DETECTION, (status.endsWith("1"))? 1 : 0 );
-                        }
-                        else if(i == statusFlagString.length() - 3) {
-                            i--;
-                            String secondStatus = statusFlagString.substring(i-1 , i);
-                            if(status.endsWith("1") && secondStatus.endsWith("0")) {
-                                bundle.putInt(KEY_PULSE_RATE_RANGE_DETECTION, 1);
-                            }
-                            else if(status.endsWith("0") && secondStatus.endsWith("1")) {
-                                bundle.putInt(KEY_PULSE_RATE_RANGE_DETECTION, 2);
-                            }
-                            else if(status.endsWith("1") && secondStatus.endsWith("1")) {
-                                bundle.putInt(KEY_PULSE_RATE_RANGE_DETECTION, 3);
-                            }
-                            else {
-                                bundle.putInt(KEY_PULSE_RATE_RANGE_DETECTION, 0);
-                            }
-                        }
-                        else if(i == statusFlagString.length() - 5) {
-                            bundle.putInt(KEY_MEASUREMENT_POSITION_DETECTION,(status.endsWith("1"))? 1 : 0);
-                        }
-                    }
-                }*/
-            }
-        }
-
-        //Data handling for all devices, if not specified
-        else {
-            // For all other profiles, writes the data formatted in HEX.
-            final byte[] data = characteristic.getValue();
-            if (data != null && data.length > 0) {
-                final StringBuilder stringBuilder = new StringBuilder(data.length);
-                for (byte byteChar : data)
-                    stringBuilder.append(String.format("%02X ", byteChar));
-                intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
-            }
-        }
-    }
 
 }

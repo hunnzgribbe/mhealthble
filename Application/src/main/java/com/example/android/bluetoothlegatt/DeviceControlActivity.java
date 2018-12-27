@@ -56,11 +56,8 @@ public class DeviceControlActivity extends Activity {
     private String mDeviceName;
     private String mDeviceAddress;
 
-    //Neu:
     private TextView mDeviceValues;
     private DBHelper mydb;
-    private int from_Where_I_Am_Coming = 0;
-    private int id_To_Update = 0;
 
     private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
@@ -184,6 +181,7 @@ public class DeviceControlActivity extends Activity {
         ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
         mGattServicesList = (ExpandableListView) findViewById(R.id.gatt_services_list);
         mGattServicesList.setOnChildClickListener(servicesListClickListner);
+
         mConnectionState = (TextView) findViewById(R.id.connection_state);
         mDataField = (TextView) findViewById(R.id.data_value);
 
@@ -324,6 +322,7 @@ public class DeviceControlActivity extends Activity {
                 new int[] { android.R.id.text1, android.R.id.text2 }
         );
         mGattServicesList.setAdapter(gattServiceAdapter);
+
     }
 
     private static IntentFilter makeGattUpdateIntentFilter() {

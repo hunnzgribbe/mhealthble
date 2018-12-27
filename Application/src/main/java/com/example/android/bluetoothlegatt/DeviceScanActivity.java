@@ -67,10 +67,6 @@ public class DeviceScanActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         getActionBar().setTitle(R.string.title_devices);
         mydb = new DBHelper(this);
-        //Check if application has already an created user
-        checkFirstRun();
-
-
 
 
         //ArrayList array_list = mydb.getAllMhealthUsers();
@@ -97,45 +93,14 @@ public class DeviceScanActivity extends ListActivity {
         }
 
         //Check for Location Permission (needs to be done starting from Marshmallow)
-        //Otherwise you cant scan for Devices
+        //and if already a user is created for the db
+        //Otherwise you cant scan for Devices for the first start of the app
         if (Build.VERSION.SDK_INT >= 23) {
-            // Marshmallow+ Permission APIs
-            marshMallowCheck();
+            // Marshmallow+ Permission APIs and
+            checkPermissions();
         }
     }
 
-    //Check if application was ever started -> If not, force to make a new user
-    private void checkFirstRun() {
-
-        final String PREFS_NAME = "MyPrefsFile";
-        //Set here the Build version from Androidmanifest
-        final String PREF_VERSION_CODE_KEY = "1";
-        final int DOESNT_EXIST = -1;
-        // Get current version code
-        int currentVersionCode = BuildConfig.VERSION_CODE;
-        // Get saved version code
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
-
-        // Check for first run or upgrade
-        if (currentVersionCode == savedVersionCode) {
-            // This is just a normal run, do nothing
-            return;
-
-        } else if (savedVersionCode == DOESNT_EXIST) {
-            // TODO This is a new install (or the user cleared the shared preferences)
-            //Open new View for creating user and db
-            Intent intent = new Intent(this, UserAddActivity.class);
-            this.startActivity(intent);
-            return;
-
-        } else if (currentVersionCode > savedVersionCode) {
-            // TODO This is an upgrade
-            return;
-        }
-        // Update the shared preferences with the current version code
-        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
-    }
 
 
     //-----------------------------------------------------------------------------------------------
@@ -156,18 +121,18 @@ public class DeviceScanActivity extends ListActivity {
                 // Check for ACCESS_FINE_LOCATION
                 if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-                    Toast.makeText(this, "All Permission GRANTED !! Thank You :)", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "All Permission Granted!", Toast.LENGTH_SHORT)
                             .show();
                 }
                 // Check for ACCESS_COARSE_LOCATION
                 else if (perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-                    Toast.makeText(this, "All Permission GRANTED !! Thank You :)", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "All Permission Granted!", Toast.LENGTH_SHORT)
                             .show();
                 }
                 else {
                     // Permission Denied
-                    Toast.makeText(this, "One or More Permissions are DENIED Exiting App :(", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "One or More Permissions are DENIED -> Exiting App :(", Toast.LENGTH_SHORT)
                             .show();
                     finish();
                 }
@@ -180,7 +145,7 @@ public class DeviceScanActivity extends ListActivity {
 
 
     @TargetApi(Build.VERSION_CODES.M)
-    protected void marshMallowCheck() {
+    protected void checkPermissions() {
         List<String> permissionsNeeded = new ArrayList<String>();
 
         final List<String> permissionsList = new ArrayList<String>();
@@ -208,6 +173,13 @@ public class DeviceScanActivity extends ListActivity {
                                         REQUEST_PERMISSION_LOCATION);
                             }
                         });
+
+
+//TODO: Here is the Activity called for setting a new user
+                Intent intent = new Intent(this, UserAddActivity.class);
+                this.startActivity(intent);
+
+
                 return;
             }
             requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
@@ -215,7 +187,7 @@ public class DeviceScanActivity extends ListActivity {
             return;
         }
 
-        Toast.makeText(this, "No new Permission Required- Launching App .You are Awesome!!", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Launching App", Toast.LENGTH_SHORT)
                 .show();
     }
 

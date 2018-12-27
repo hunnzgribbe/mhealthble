@@ -1,10 +1,12 @@
 package com.example.android.bluetoothlegatt;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,10 +16,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class UserActivity extends Activity{
 
     DBHelper mydb;
-    private int id;
     TextView email;
     TextView weightunit ;
     TextView weightvalue;
@@ -27,11 +29,13 @@ public class UserActivity extends Activity{
     TextView pulse;
     TextView date;
     TableLayout table;
+    Integer id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_setting);
+        mydb = new DBHelper(this);
         //Identify View-Fields and assign it
         email = findViewById(R.id.editTextEmail2);
         weightunit = findViewById(R.id.textViewWeightUnit);
@@ -42,20 +46,20 @@ public class UserActivity extends Activity{
         pulse = findViewById(R.id.textViewPulseValue);
         date = findViewById(R.id.textViewDateValue);
 
-        mydb = new DBHelper(this);
-        //Get last db-user-id which was created
-        //id = mydb.getLastAddedRowId();
-        id = mydb.getnumberOfRows();
 
+        //Get last db-user-id which was created
+        id = mydb.getLastUsersId();
+
+        //Assign cursor for db id and get data from the fields
         Cursor rs = mydb.getData(id);
         rs.moveToFirst();
         String email = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_EMAIL));
-        String weightvalue = rs.getString(rs.getColumnIndex(Double.toString(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_VALUE)));
+        String weightvalue = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_VALUE));
         String weightunit = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_UNIT));
-        String systolic = rs.getString(rs.getColumnIndex(Double.toString(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_SYSTOLIC)));
-        String diastolic = rs.getString(rs.getColumnIndex(Double.toString(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_DIASTOLIC)));
-        String map = rs.getString(rs.getColumnIndex(Double.toString(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_MAP)));
-        String pulse = rs.getString(rs.getColumnIndex(Double.toString(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_PULSE)));
+        String systolic = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_SYSTOLIC));
+        String diastolic = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_DIASTOLIC));
+        String map = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_MAP));
+        String pulse = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_PULSE));
         String date = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_LAST_READ_TIME));
 
         if (!rs.isClosed()) {
@@ -169,6 +173,22 @@ public class UserActivity extends Activity{
                 d.setTitle("Are you sure?");
                 d.show();
 
+                //Clear app data:
+                try {
+                    // clearing app data
+                    if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
+                        ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
+                    } else {
+                        String packageName = getApplicationContext().getPackageName();
+                        Runtime runtime = Runtime.getRuntime();
+                        runtime.exec("pm clear "+packageName);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -176,31 +196,5 @@ public class UserActivity extends Activity{
         }
     }
 
-  /*  public void run(View view) {
-        Bundle extras = getIntent().getExtras();
-        if(extras !=null) {
-            int Value = extras.getInt("id");
-            if(Value>0){
-                if(mydb.updateMhealthUserMail(id, email.getText().toString())){
-                    Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),DeviceScanActivity.class);
-                    startActivity(intent);
-                } else{
-                    Toast.makeText(getApplicationContext(), "not Updated", Toast.LENGTH_SHORT).show();
-                }
-            } else{
-                if(mydb.insertMhealthUserMail(email.getText().toString())){
-                    Toast.makeText(getApplicationContext(), "done",
-                            Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(getApplicationContext(), "not done",
-                            Toast.LENGTH_SHORT).show();
-                }
-                Intent intent = new Intent(getApplicationContext(),DeviceScanActivity.class);
-                startActivity(intent);
-            }
-        }
-    }
-    */
 
 }

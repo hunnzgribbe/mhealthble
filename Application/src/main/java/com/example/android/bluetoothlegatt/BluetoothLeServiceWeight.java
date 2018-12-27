@@ -14,7 +14,7 @@ import java.util.UUID;
 public class BluetoothLeServiceWeight extends BluetoothLeService {
 
     public String WEIGHT_UNIT = "";
-    public Double WEIGHT_VALUE = 0.0;
+    public String WEIGHT_VALUE = "";
     public String DATE = "";
     public final static UUID UUID_WEIGHT_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
@@ -28,7 +28,7 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
     }
 
     //Konstruktor
-    public BluetoothLeServiceWeight (String weightUnit, Double weightValue, String date){
+    public BluetoothLeServiceWeight (String weightUnit, String weightValue, String date){
         this.WEIGHT_UNIT = weightUnit;
         this.WEIGHT_VALUE = weightValue;
         this.DATE = date;
@@ -39,7 +39,7 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
         this.WEIGHT_UNIT = weightUnit;
     }
 
-    public void setWEIGHT_VALUE(Double weightValue) {
+    public void setWEIGHT_VALUE(String weightValue) {
         this.WEIGHT_VALUE = weightValue;
     }
 
@@ -51,7 +51,7 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
         return WEIGHT_UNIT;
     }
 
-    public Double getWeightValue(){
+    public String getWeightValue(){
         return WEIGHT_VALUE;
     }
 
@@ -90,7 +90,7 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
                     value = Math.round(value*100)/100.0;
                     //test: intent.putExtra(EXTRA_DATA, Double.toString(value));
                     intent.putExtra(Double.toString(value), WEIGHT_VALUE);
-                    this.setWEIGHT_VALUE(value);
+                    this.setWEIGHT_VALUE(Double.toString(value));
 
                     Log.d("Weight", "V :" + value);
                     offset+=2;
@@ -133,33 +133,6 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
                 }
             }
 
-        }
-
-
-        //Fill data to database
-        Bundle extras = intent.getExtras();
-        if(extras !=null) {
-            int Value = extras.getInt("id");
-            id_To_Update = Value;
-            if (Value > 0) {
-                //Fill in the weightunit and value
-                if (mydb.updateMhealthUserWeight(id_To_Update, getWeightUnit(), getWeightValue())) {
-                    Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(getApplicationContext(), DeviceScanActivity.class);
-                    //startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "not Updated", Toast.LENGTH_SHORT).show();
-                }
-
-                //Fill in the time stamp
-                if (mydb.updateMhealthUserDate(id_To_Update, getDate())) {
-                    Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(getApplicationContext(), DeviceScanActivity.class);
-                    //startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "not Updated", Toast.LENGTH_SHORT).show();
-                }
-            }
         }
 
     }

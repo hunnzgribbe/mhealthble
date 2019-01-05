@@ -732,6 +732,7 @@ id textViewSystolicValue
 id textViewWeightUnit
 id textViewWeightValue
 id textViewWelcome
+id textbpunit
 id time
 id title
 id titleDividerNoCustom
@@ -837,6 +838,8 @@ string action_sign_in_short
 string add_user
 string app_name
 string ble_not_supported
+string bp_unit
+string bp_unit_string
 string connected
 string date_string
 string date_value

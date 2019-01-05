@@ -27,7 +27,6 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +48,9 @@ import java.util.Map;
 
 /**
  * Main Activity for scanning and displaying available Bluetooth LE devices.
+ * From here you can access the User view (Options menu)
  */
+
 public class DeviceScanActivity extends ListActivity {
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
@@ -57,19 +58,18 @@ public class DeviceScanActivity extends ListActivity {
     private Handler mHandler;
     private static final int REQUEST_PERMISSION_LOCATION = 1;
     private static final int REQUEST_PERMISSION_ENABLE_BT = 1;
-    // Stops scanning after 10 seconds.
-    private static final long SCAN_PERIOD = 10000;
+    // Stops scanning for ble devices after 30 seconds.
+    private static final long SCAN_PERIOD = 30000;
     DBHelper mydb;
     public int id;
 
+    //Gets called as soon as the activity gets opened
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setTitle(R.string.title_devices);
+
         mydb = new DBHelper(this);
-
-
-        //ArrayList array_list = mydb.getAllMhealthUsers();
         mHandler = new Handler();
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
@@ -96,7 +96,7 @@ public class DeviceScanActivity extends ListActivity {
         //and if already a user is created for the db
         //Otherwise you cant scan for Devices for the first start of the app
         if (Build.VERSION.SDK_INT >= 23) {
-            // Marshmallow+ Permission APIs and
+            // Marshmallow and Permission APIs checkmethod
             checkPermissions();
         }
     }
@@ -104,7 +104,7 @@ public class DeviceScanActivity extends ListActivity {
 
 
     //-----------------------------------------------------------------------------------------------
-    //Location Permission Message starting from Marshmallow:
+    //Getting Location Permission starting from Marshmallow:
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -158,7 +158,6 @@ public class DeviceScanActivity extends ListActivity {
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
 
-                // Need Rationale
                 String message = "App need access to " + permissionsNeeded.get(0);
 
                 for (int i = 1; i < permissionsNeeded.size(); i++)
@@ -175,11 +174,10 @@ public class DeviceScanActivity extends ListActivity {
                         });
 
 
-//TODO: Here is the Activity called for setting a new user
+//TODO: Here is the Activity called for setting a new user, if not already created
+                //When you delete the user whithin the app or clear the data of the app, you have to make a new user
                 Intent intent = new Intent(this, UserAddActivity.class);
                 this.startActivity(intent);
-
-
                 return;
             }
             requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
@@ -213,6 +211,7 @@ public class DeviceScanActivity extends ListActivity {
     }
 
     //-----------------------------------------------------------------------------------------------
+    //Handling the options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -229,11 +228,10 @@ public class DeviceScanActivity extends ListActivity {
             menu.findItem(R.id.menu_refresh).setActionView(
                     R.layout.actionbar_indeterminate_progress);
         }
-
-
         return true;
     }
 
+    //If Option in options menu is selected:
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -253,6 +251,7 @@ public class DeviceScanActivity extends ListActivity {
         return true;
     }
 
+    //App gets reopened
     @Override
     protected void onResume() {
         super.onResume();
@@ -283,6 +282,7 @@ public class DeviceScanActivity extends ListActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //App gets minimized
     @Override
     protected void onPause() {
         super.onPause();
@@ -290,9 +290,9 @@ public class DeviceScanActivity extends ListActivity {
         mLeDeviceListAdapter.clear();
     }
 
+    //User clicks on a device in the list
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-
 
         final BluetoothDevice device = mLeDeviceListAdapter.getDevice(position);
         if (device == null) return;
@@ -300,14 +300,15 @@ public class DeviceScanActivity extends ListActivity {
         intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
         intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
 
-
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
+        //Open next actitivy
         startActivity(intent);
     }
 
+    //Scan for devices
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.

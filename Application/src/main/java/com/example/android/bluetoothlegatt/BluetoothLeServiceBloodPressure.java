@@ -2,15 +2,13 @@ package com.example.android.bluetoothlegatt;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.util.UUID;
 
 
-//Class for measuring the Weight of the scale correctly
+//Sub Class for measuring the Blood Pressure correctly
+
+
 public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
 
     public String BLOOD_PRESSURE_UNIT = "";
@@ -21,15 +19,12 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
     public String DATE = "";
     public final static UUID UUID_BLOOD_PRESSURE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.BLOOD_PRESSURE_MEASUREMENT);
-    private DBHelper mydb ;
 
 
-    //Standardkonstruktur
-    public BluetoothLeServiceBloodPressure (){
-        mydb = new DBHelper(this);
-    }
+    //Stock constructor
+    public BluetoothLeServiceBloodPressure (){ }
 
-    //Konstruktor
+    //Constructor
     public BluetoothLeServiceBloodPressure (String bloodunit, String systolic, String diastolic, String map, String pulse, String date){
         this.BLOOD_PRESSURE_UNIT = bloodunit;
         this.BLOOD_PRESSURE_SYSTOLIC = systolic;
@@ -37,10 +32,10 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
         this.BLOOD_PRESSURE_MAP = map;
         this.BLOOD_PRESSURE_PULSE = pulse;
         this.DATE = date;
-        mydb = new DBHelper(this);
     }
 
-    //Setter
+    //Setter methods
+    //Later, you would set the following setter methods private
     public void setBP_UNIT(String bloodunit){
         this.BLOOD_PRESSURE_UNIT = bloodunit;
     }
@@ -66,7 +61,7 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
     }
 
 
-    //Getter
+    //Getter methods
     public String getBP_UNIT(){
         return BLOOD_PRESSURE_UNIT;
     }
@@ -91,10 +86,12 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
         return DATE;
     }
 
+
     //read values of device
     public void readValues (final Intent intent, final BluetoothGattCharacteristic characteristic){
 
         //Data handling for blood pressure device:
+        //Obtained from A&D Github project
         if (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) {
 
             int flag = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);

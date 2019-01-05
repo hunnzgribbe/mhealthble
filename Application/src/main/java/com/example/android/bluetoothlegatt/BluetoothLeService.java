@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/*
+This Class is for managing and handling the bluetooth devices. There are Subclasses Weight and BloodPressure for measuring these specific devices.
+ */
+
 package com.example.android.bluetoothlegatt;
 
 import android.app.Service;
@@ -29,7 +33,6 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -69,14 +72,6 @@ public class BluetoothLeService extends Service {
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
     public final static String EXTRA_DATA =
             "com.example.bluetooth.le.EXTRA_DATA";
-    //Save Values in Strings:
-    public final static String WEIGHT_UNIT = "";
-    public final static String WEIGHT_VALUE = "";
-    public final static String BLOOD_PRESSURE_UNIT = "";
-    public final static String BLOOD_PRESSURE_SYSTOLIC = "";
-    public final static String BLOOD_PRESSURE_DIASTOLIC = "";
-    public final static String BLOOD_PRESSURE_MAP = "";
-    public final static String BLOOD_PRESSURE_PULSE = "";
 
     public final static UUID UUID_HEART_RATE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
@@ -86,8 +81,6 @@ public class BluetoothLeService extends Service {
 
     public final static UUID UUID_BLOOD_PRESSURE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
-
-
 
 
     // Implements callback methods for GATT events that the app cares about.  For example,
@@ -145,6 +138,9 @@ public class BluetoothLeService extends Service {
         sendBroadcast(intent);
     }
 
+    /*
+    In this method, it is verified, that the device has data to read and now it can be accessed.
+     */
     private void broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
@@ -153,7 +149,9 @@ public class BluetoothLeService extends Service {
 
 
 //TODO: Read and save A&DDevices
+        //Calls instances of the Sub Classes and after getting the data, its getting stored in the database
 
+        //For Weight scale
         if (UUID_WEIGHT_MEASUREMENT.equals(characteristic.getUuid())) {
             BluetoothLeServiceWeight weightObject = new BluetoothLeServiceWeight();
             weightObject.setDATE(getCurrentDate());
@@ -162,6 +160,7 @@ public class BluetoothLeService extends Service {
             mydb = new DBHelper(this);
             mydb.updateMhealthUserWeight(mydb.getLastUsersId(), weightObject.getWeightUnit(), weightObject.getWeightValue());
         }
+        //For Blood Pressure Device
         else if (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) {
             BluetoothLeServiceBloodPressure bpObject = new BluetoothLeServiceBloodPressure();
             bpObject.setDATE(getCurrentDate());
@@ -170,6 +169,7 @@ public class BluetoothLeService extends Service {
             mydb = new DBHelper(this);
             mydb.updateMhealthUserbpm(mydb.getLastUsersId(), bpObject.getBP_UNIT(), bpObject.getBP_SYSTOLIC(), bpObject.getBP_DIASTOLIC(), bpObject.getBP_MAP(), bpObject.getBP_PULSE());
         }
+        //All other devices (Generic)
         else {
             // For all other profiles, writes the data formatted in HEX.
             final byte[] data = characteristic.getValue();
@@ -215,8 +215,7 @@ public class BluetoothLeService extends Service {
      * @return Return true if the initialization is successful.
      */
     public boolean initialize() {
-        // For API level 18 and above, get a reference to BluetoothAdapter through
-        // BluetoothManager.
+        // For API level 18 and above, get a reference to BluetoothAdapter through BluetoothManager.
         if (mBluetoothManager == null) {
             mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             if (mBluetoothManager == null) {
@@ -318,8 +317,8 @@ public class BluetoothLeService extends Service {
     }
 
     /**
-     * Enables or disables notification on a give characteristic.
-     *
+     * Enables or disables notification and indication on a give characteristic.
+     * Indication value is needed for certain ble devices (A&D), to get the actual data from it.
      * @param characteristic Characteristic to act on.
      * @param enabled If true, enable notification.  False otherwise.
      */
@@ -332,10 +331,12 @@ public class BluetoothLeService extends Service {
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
 
-        // This is specific to Heart Rate Measurement.
+        // This is specific for Heart Rate Measurement.
+        //Important to activate Indication value, otherwise you wont get data from it
         if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
             BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            descriptor.setValue(BluetoothGattDescriptor.ENABLE_INDICATION_VALUE);
             mBluetoothGatt.writeDescriptor(descriptor);
         }
 
@@ -372,7 +373,8 @@ public class BluetoothLeService extends Service {
 
 
     /**
-     * Get the current date
+     * Get the current date method, used for writing the time stamp into the database, as soon
+     * as new values are stored
      *
      *
      *

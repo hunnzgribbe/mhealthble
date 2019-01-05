@@ -16,13 +16,15 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+//User Activity, accessed from the options menu
+//Primary for displaying the values and changing username
 public class UserActivity extends Activity{
 
     DBHelper mydb;
     TextView email;
     TextView weightunit ;
     TextView weightvalue;
+    TextView bpunit;
     TextView systolic;
     TextView diastolic;
     TextView map;
@@ -31,6 +33,7 @@ public class UserActivity extends Activity{
     TableLayout table;
     Integer id;
 
+    //Gets called at opening the activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +43,12 @@ public class UserActivity extends Activity{
         email = findViewById(R.id.editTextEmail2);
         weightunit = findViewById(R.id.textViewWeightUnit);
         weightvalue = findViewById(R.id.textViewWeightValue);
+        bpunit = findViewById(R.id.textbpunit);
         systolic = findViewById(R.id.textViewSystolicValue);
         diastolic = findViewById(R.id.textViewDiastolicValue);
         map = findViewById(R.id.textViewMapValue);
         pulse = findViewById(R.id.textViewPulseValue);
         date = findViewById(R.id.textViewDateValue);
-
 
         //Get last db-user-id which was created
         id = mydb.getLastUsersId();
@@ -56,12 +59,14 @@ public class UserActivity extends Activity{
         String email = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_EMAIL));
         String weightvalue = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_VALUE));
         String weightunit = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_UNIT));
+        String bpunit = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_UNIT));
         String systolic = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_SYSTOLIC));
         String diastolic = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_DIASTOLIC));
         String map = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_MAP));
         String pulse = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_PULSE));
         String date = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_LAST_READ_TIME));
 
+        //Display data
         if (!rs.isClosed()) {
             rs.close();
         }
@@ -84,6 +89,10 @@ public class UserActivity extends Activity{
             this.weightunit.setFocusable(false);
             this.weightunit.setClickable(false);
 
+            this.bpunit.setText(bpunit);
+            this.bpunit.setFocusable(false);
+            this.bpunit.setClickable(false);
+
             this.systolic.setText(systolic);
             this.systolic.setFocusable(false);
             this.systolic.setClickable(false);
@@ -104,8 +113,6 @@ public class UserActivity extends Activity{
             this.date.setFocusable(false);
             this.date.setClickable(false);
 
-
-
     }
 
     @Override
@@ -116,6 +123,7 @@ public class UserActivity extends Activity{
         return true;
     }
 
+    //User opens otpions menu
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch(item.getItemId()) {
@@ -149,6 +157,7 @@ public class UserActivity extends Activity{
                 return true;
 
             //Delete user menu item clicked:
+            //DB gets deleted as well as app data
             case R.id.delete_user:
 
                 //Show Warning message

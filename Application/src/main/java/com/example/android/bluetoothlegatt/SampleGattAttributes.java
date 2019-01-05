@@ -1,25 +1,10 @@
-/*
- * Copyright (C) 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.android.bluetoothlegatt;
 
 import java.util.HashMap;
 
 /**
- * This class includes a small subset of standard GATT attributes for demonstration purposes.
+ * This class includes a subset of standard GATT attributes.
+ * This is primary for getting the correct names in the app
  */
 public class SampleGattAttributes {
     private static HashMap<String, String> attributes = new HashMap();
@@ -32,7 +17,7 @@ public class SampleGattAttributes {
 
     static {
 
-        //Sample Descriptors
+        //Descriptors
         attributes.put("00002900-0000-1000-8000-00805f9b34fb", "Characteristic Extended Properties");
         attributes.put("00002901-0000-1000-8000-00805f9b34fb", "Characteristic User Description");
         attributes.put("00002902-0000-1000-8000-00805f9b34fb", "Client Characteristic Configuration");
@@ -49,13 +34,10 @@ public class SampleGattAttributes {
         attributes.put("0000290d-0000-1000-8000-00805f9b34fb", "Environmental Sensing Trigger Setting");
         attributes.put("0000290e-0000-1000-8000-00805f9b34fb", "Time Trigger Setting");
 
-
-
-        // Sample Services.
+        //Services
         attributes.put("0000180d-0000-1000-8000-00805f9b34fb", "Heart Rate Service");
         attributes.put("0000180a-0000-1000-8000-00805f9b34fb", "Device Information Service");
         attributes.put("0000181d-0000-1000-8000-00805f9b34fb", "Weight Scale Service");
-
         attributes.put("00001800-0000-1000-8000-00805f9b34fb", "Generic Access");
         attributes.put("00001801-0000-1000-8000-00805f9b34fb", "Generic Attribute");
         attributes.put("00001802-0000-1000-8000-00805f9b34fb", "Immediate Alert");
@@ -66,8 +48,6 @@ public class SampleGattAttributes {
         attributes.put("00001807-0000-1000-8000-00805f9b34fb", "Next DST Change Service");
         attributes.put("00001808-0000-1000-8000-00805f9b34fb", "Glucose");
         attributes.put("00001809-0000-1000-8000-00805f9b34fb", "Health Thermometer");
-   //     attributes.put("0000180a-0000-1000-8000-00805f9b34fb", "Device Information");
-   //     attributes.put("0000180d-0000-1000-8000-00805f9b34fb", "Heart Rate");
         attributes.put("0000180e-0000-1000-8000-00805f9b34fb", "Phone Alert Status Service");
         attributes.put("0000180f-0000-1000-8000-00805f9b34fb", "Battery Service");
         attributes.put("00001810-0000-1000-8000-00805f9b34fb", "Blood Pressure");
@@ -82,7 +62,6 @@ public class SampleGattAttributes {
         attributes.put("0000181a-0000-1000-8000-00805f9b34fb", "Environmental Sensing");
         attributes.put("0000181b-0000-1000-8000-00805f9b34fb", "Body Composition");
         attributes.put("0000181c-0000-1000-8000-00805f9b34fb", "User Data");
-    //    attributes.put("0000181d-0000-1000-8000-00805f9b34fb", "Weight Scale");
         attributes.put("0000181e-0000-1000-8000-00805f9b34fb", "Bond Management Service");
         attributes.put("0000181f-0000-1000-8000-00805f9b34fb", "Continuous Glucose Monitoring");
         attributes.put("00001820-0000-1000-8000-00805f9b34fb", "Internet Protocol Support Service");
@@ -97,11 +76,7 @@ public class SampleGattAttributes {
         attributes.put("00001829-0000-1000-8000-00805f9b34fb", "Reconnection Configuration");
 
 
-        // Sample Characteristics.
-        //attributes.put(WEIGHT_MEASUREMENT, "Weight Scale Measurement");
-        //attributes.put(HEART_RATE_MEASUREMENT, "Heart Rate Measurement");
-        //attributes.put("00002a29-0000-1000-8000-00805f9b34fb", "Manufacturer Name String");
-
+        //Characteristics
         attributes.put("00002a00-0000-1000-8000-00805f9b34fb", "Device Name");
         attributes.put("00002a01-0000-1000-8000-00805f9b34fb", "Appearance");
         attributes.put("00002a02-0000-1000-8000-00805f9b34fb", "Peripheral Privacy Flag");

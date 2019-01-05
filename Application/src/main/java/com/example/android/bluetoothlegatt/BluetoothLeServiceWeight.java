@@ -2,15 +2,11 @@ package com.example.android.bluetoothlegatt;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.util.UUID;
 
 
-//Class for measuring the Weight of the scale correctly
+//Sub Class for measuring the Weight of the scale correctly
 public class BluetoothLeServiceWeight extends BluetoothLeService {
 
     public String WEIGHT_UNIT = "";
@@ -18,23 +14,19 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
     public String DATE = "";
     public final static UUID UUID_WEIGHT_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
-    private int from_Where_I_Am_Coming = 0;
-    private DBHelper mydb ;
-    private int id_To_Update = 0;
 
-    //Standardkonstruktur
-    public BluetoothLeServiceWeight (){
-        mydb = new DBHelper(this);
-    }
+    //Stock constructor
+    public BluetoothLeServiceWeight (){ }
 
-    //Konstruktor
+    //Constructor
     public BluetoothLeServiceWeight (String weightUnit, String weightValue, String date){
         this.WEIGHT_UNIT = weightUnit;
         this.WEIGHT_VALUE = weightValue;
         this.DATE = date;
-        mydb = new DBHelper(this);
     }
 
+    //Setter methods
+    //Later, you would set the following setter methods private
     public void setWEIGHT_UNIT(String weightUnit){
         this.WEIGHT_UNIT = weightUnit;
     }
@@ -47,6 +39,7 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
         this.DATE = date;
     }
 
+    //Getter methods
     public String getWeightUnit(){
         return WEIGHT_UNIT;
     }
@@ -58,6 +51,7 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
     public String getDate(){
         return DATE;
     }
+
 
     //read values of device
     public void readValues (final Intent intent, final BluetoothGattCharacteristic characteristic){
@@ -86,9 +80,8 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
 
                     // Value
                     double value = (double)(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)) * convertValue;
-                    //Runden:
+                    //Round:
                     value = Math.round(value*100)/100.0;
-                    //test: intent.putExtra(EXTRA_DATA, Double.toString(value));
                     intent.putExtra(Double.toString(value), WEIGHT_VALUE);
                     this.setWEIGHT_VALUE(Double.toString(value));
 

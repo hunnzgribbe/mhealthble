@@ -40,11 +40,12 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * For a given BLE device, this Activity provides the user interface to connect, display data,
+ * For a selected BLE device, this Activity provides the user interface to connect, display data,
  * and display GATT services and characteristics supported by the device.  The Activity
  * communicates with {@code BluetoothLeService}, which in turn interacts with the
  * Bluetooth LE API.
  */
+
 public class DeviceControlActivity extends Activity {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
 
@@ -94,7 +95,7 @@ public class DeviceControlActivity extends Activity {
     // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
     // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
     // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read
-    //                        or notification operations.
+    // or notification operations.
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -113,15 +114,6 @@ public class DeviceControlActivity extends Activity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
-                displayData2(intent.getStringExtra(BluetoothLeService.WEIGHT_UNIT));
-                displayData2(intent.getStringExtra(BluetoothLeService.WEIGHT_VALUE));
-                displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_UNIT));
-                displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_SYSTOLIC));
-                displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_DIASTOLIC));
-                displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_MAP));
-                displayData2(intent.getStringExtra(BluetoothLeService.BLOOD_PRESSURE_PULSE));
-
-
             }
 
 
@@ -130,7 +122,7 @@ public class DeviceControlActivity extends Activity {
     };
 
     // If a given GATT characteristic is selected, check for supported features.  This sample
-    // demonstrates 'Read' and 'Notify' features.  See
+    // demonstrates 'Read','Notify' and 'Indicator' features.  See
     // http://d.android.com/reference/android/bluetooth/BluetoothGatt.html for the complete
     // list of supported characteristic features.
     private final ExpandableListView.OnChildClickListener servicesListClickListner =
@@ -168,6 +160,7 @@ public class DeviceControlActivity extends Activity {
         mDataField.setText(R.string.no_data);
     }
 
+    //Method gets called by opening the activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,8 +177,6 @@ public class DeviceControlActivity extends Activity {
 
         mConnectionState = (TextView) findViewById(R.id.connection_state);
         mDataField = (TextView) findViewById(R.id.data_value);
-
-        //Neu:
         mDeviceValues = (TextView) findViewById(R.id.values);
 
         getActionBar().setTitle(mDeviceName);
@@ -204,12 +195,14 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
+    //App gets minimzed, pause the Bluetooth connection
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(mGattUpdateReceiver);
     }
 
+    //App gets closed, destroy the connection
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -217,6 +210,7 @@ public class DeviceControlActivity extends Activity {
         mBluetoothLeService = null;
     }
 
+    //Method for displaying the options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.gatt_services, menu);
@@ -230,6 +224,7 @@ public class DeviceControlActivity extends Activity {
         return true;
     }
 
+    //If a option of the options menu is selected..
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -261,15 +256,8 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
-    private void displayData2(String data) {
-        if (data != null) {
-            mDeviceValues.setText(data);
-        }
-    }
-
-    // Demonstrates how to iterate through the supported GATT Services/Characteristics.
-    // In this sample, we populate the data structure that is bound to the ExpandableListView
-    // on the UI.
+    // Demonstrates how to iterate through all the supported GATT Services/Characteristics by the device.
+    // -> Populate the data structure that is bound to the ExpandableListView on the UI.
     private void displayGattServices(List<BluetoothGattService> gattServices) {
         if (gattServices == null) return;
         String uuid = null;
@@ -325,6 +313,7 @@ public class DeviceControlActivity extends Activity {
 
     }
 
+    //Intents for several Actions
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);

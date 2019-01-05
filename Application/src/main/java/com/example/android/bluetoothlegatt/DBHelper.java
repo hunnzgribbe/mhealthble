@@ -6,12 +6,10 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import java.util.ArrayList;
 
 
-//Database class for storing the informations
+//Database class for storing the information
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "mHealth.db";
@@ -32,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME , null, 1);
     }
 
+    //Create db
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -41,6 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
         );
     }
 
+    //Drop table if exists
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
@@ -48,6 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //Insert new data into db
     public boolean insertMhealthUser (String email, String weightunit, String weightvalue, String bpunit, String systolic, String diastolic, String map, String pulse, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -64,6 +65,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //Insert new Usermail
     public boolean insertMhealthUserMail (String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -72,14 +74,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-
+    //Cursor for getting data from a specific user
     public Cursor getData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        //Cursor res =  db.rawQuery( "select * from mhealthusers where id="+id+"", null );
         Cursor res =  db.rawQuery( "select * from mhealthusers where id=?", new String[] { Integer.toString(id) } );
         return res;
     }
 
+    //Get the row numbers total
     public int getnumberOfRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         int numRows = (int) DatabaseUtils.queryNumEntries(db, MHEALTHUSERS_TABLE_NAME);
@@ -87,6 +89,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    //Update methods: Update data for an existing user
     public boolean updateMhealthUser (Integer id, String email, String weightunit, String weightvalue, String bpunit, String systolic, String diastolic, String map, String pulse) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -140,6 +143,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    //Delete User from db
     public Integer deleteUser (Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete("contacts",
@@ -147,6 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] { Integer.toString(id) });
     }
 
+    //Get an Arraylist for Email and ID
     public ArrayList<String> getAllMhealthUsers() {
         ArrayList<String> array_list = new ArrayList<String>();
 
@@ -162,6 +167,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
+    //Get the ID of the last inserted user
     public Integer getLastUsersId() {
         int id = 0;
         SQLiteDatabase db = this.getReadableDatabase();

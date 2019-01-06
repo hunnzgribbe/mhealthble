@@ -40,7 +40,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +58,7 @@ public class DeviceScanActivity extends ListActivity {
     private static final int REQUEST_PERMISSION_LOCATION = 1;
     private static final int REQUEST_PERMISSION_ENABLE_BT = 1;
     // Stops scanning for ble devices after 30 seconds.
-    private static final long SCAN_PERIOD = 30000;
+    private static final long SCAN_PERIOD = 10000;
     DBHelper mydb;
     public int id;
 
@@ -390,7 +389,7 @@ public class DeviceScanActivity extends ListActivity {
                 viewHolder.deviceName.setText(deviceName);
             else
                 viewHolder.deviceName.setText(R.string.unknown_device);
-            viewHolder.deviceAddress.setText(device.getAddress());
+                viewHolder.deviceAddress.setText(device.getAddress());
 
             return view;
         }

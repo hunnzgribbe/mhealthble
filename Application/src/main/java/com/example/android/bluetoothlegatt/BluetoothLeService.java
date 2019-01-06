@@ -35,7 +35,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -52,8 +51,6 @@ public class BluetoothLeService extends Service {
     private BluetoothAdapter mBluetoothAdapter;
     private String mBluetoothDeviceAddress;
     private BluetoothGatt mBluetoothGatt;
-
-    public BluetoothLeServiceWeight weightObject;
     private DBHelper mydb;
 
     private int mConnectionState = STATE_DISCONNECTED;

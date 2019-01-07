@@ -35,11 +35,17 @@ public class UserAddActivity extends Activity {
                 if (!email.getText().toString().matches("")){
                     //save it and go to main screen
 
-                    //Create a new user in the db
+                    //Insert a new user in the db
                     mydb.insertMhealthUser(email.getText().toString(),"N.A.","N.A.","N.A.","N.A.","N.A.","N.A.", "N.A.", "N.A.");
 
                     Toast.makeText(getApplicationContext(), "Done",
                             Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), mydb.getAllUsers().toString(),
+                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), mydb.getLastUsersId().toString(),
+                            Toast.LENGTH_SHORT).show();
+
                     finish();
 
 

@@ -48,9 +48,9 @@
             android:id="@+id/buttonSaveUser2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/editTextEmail2"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="95dp"
+            android:layout_marginBottom="25dp"
             android:onClick="run"
             android:text="@string/save" />
 
@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text=""
+                    android:text="@string/weight_unit_string"
                     android:layout_margin="1dp"
                     android:layout_column="0"
                     android:background="#FFFFFF"

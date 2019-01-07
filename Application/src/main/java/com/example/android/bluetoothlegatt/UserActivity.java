@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +14,8 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static com.example.android.bluetoothlegatt.DBHelper.*;
 
 //User Activity, accessed from the options menu
 //Primary for displaying the values and changing username
@@ -32,6 +33,15 @@ public class UserActivity extends Activity{
     TextView date;
     TableLayout table;
     Integer id;
+    String emailString;
+    String weightunitString;
+    String weightvalueString;
+    String bpunitString;
+    String systolicString;
+    String diastolicString;
+    String mapString;
+    String pulseString;
+    String dateString;
 
     //Gets called at opening the activity
     @Override
@@ -50,68 +60,109 @@ public class UserActivity extends Activity{
         pulse = findViewById(R.id.textViewPulseValue);
         date = findViewById(R.id.textViewDateValue);
 
+        weightunitString = "";
+        weightvalueString = "";
+        bpunitString = "";
+        systolicString = "";
+        diastolicString = "";
+        mapString = "";
+        pulseString = "";
+        dateString = "";
+
         //Get last db-user-id which was created
         id = mydb.getLastUsersId();
 
-        //Assign cursor for db id and get data from the fields
-        Cursor rs = mydb.getData(id);
-        rs.moveToFirst();
-        String email = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_EMAIL));
-        String weightvalue = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_VALUE));
-        String weightunit = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_WEIGHT_UNIT));
-        String bpunit = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_UNIT));
-        String systolic = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_SYSTOLIC));
-        String diastolic = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_DIASTOLIC));
-        String map = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_MAP));
-        String pulse = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_BLOOD_PRESSURE_PULSE));
-        String date = rs.getString(rs.getColumnIndex(DBHelper.MHEALTHUSERS_COLUMN_LAST_READ_TIME));
-
-        //Display data
-        if (!rs.isClosed()) {
-            rs.close();
+        //Read out the Arraylists from the db class
+        //Show Email
+        for (int i = 0; i < mydb.getAllUsers().size(); i++){
+            switch (mydb.getAllUsers().get(i)) {
+                case MHEALTH_COLUMN_EMAIL:
+                    emailString = mydb.getAllUsers().get(i+1);
+                    break;
+                default:
+                    break;
+            }
         }
 
-            Button b = findViewById(R.id.buttonSaveUser2);
-            b.setVisibility(View.INVISIBLE);
+        for (int i = 0; i < mydb.getAllDataFromUser(id).size(); i++){
+            String temp = mydb.getAllDataFromUser(id).get(i);
 
-            table = findViewById(R.id.table_data);
-            table.setVisibility(View.VISIBLE);
+            if (temp == MHEALTH_COLUMN_WEIGHT_UNIT){
+                weightunitString += mydb.getAllDataFromUser(id).get(i+1);
+                weightunitString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_WEIGHT_VALUE){
+                weightvalueString += mydb.getAllDataFromUser(id).get(i+1);
+                weightvalueString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT){
+                bpunitString += mydb.getAllDataFromUser(id).get(i+1);
+                bpunitString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC){
+                systolicString += mydb.getAllDataFromUser(id).get(i+1);
+                systolicString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC){
+                diastolicString += mydb.getAllDataFromUser(id).get(i+1);
+                diastolicString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_MAP){
+                mapString += mydb.getAllDataFromUser(id).get(i+1);
+                mapString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE){
+                pulseString += mydb.getAllDataFromUser(id).get(i+1);
+                pulseString += "\n";
+            }
+            else if (temp == MHEALTH_COLUMN_LAST_READ_TIME){
+                dateString += mydb.getAllDataFromUser(id).get(i+1);
+                dateString += "\n";
+            }
 
-            this.email.setText(email);
-            this.email.setFocusable(false);
-            this.email.setClickable(false);
+        }
 
-            this.weightvalue.setText(weightvalue);
-            this.weightvalue.setFocusable(false);
-            this.weightvalue.setClickable(false);
+        Button b = findViewById(R.id.buttonSaveUser2);
+        b.setVisibility(View.INVISIBLE);
 
-            this.weightunit.setText(weightunit);
-            this.weightunit.setFocusable(false);
-            this.weightunit.setClickable(false);
+        table = findViewById(R.id.table_data);
+        table.setVisibility(View.VISIBLE);
 
-            this.bpunit.setText(bpunit);
-            this.bpunit.setFocusable(false);
-            this.bpunit.setClickable(false);
+        this.email.setText(emailString);
+        this.email.setFocusable(false);
+        this.email.setClickable(false);
 
-            this.systolic.setText(systolic);
-            this.systolic.setFocusable(false);
-            this.systolic.setClickable(false);
+        this.weightvalue.setText(weightvalueString);
+        this.weightvalue.setFocusable(false);
+        this.weightvalue.setClickable(false);
 
-            this.diastolic.setText(diastolic);
-            this.diastolic.setFocusable(false);
-            this.diastolic.setClickable(false);
+        this.weightunit.setText(weightunitString);
+        this.weightunit.setFocusable(false);
+        this.weightunit.setClickable(false);
 
-            this.map.setText(map);
-            this.map.setFocusable(false);
-            this.map.setClickable(false);
+        this.bpunit.setText(bpunitString);
+        this.bpunit.setFocusable(false);
+        this.bpunit.setClickable(false);
 
-            this.pulse.setText(pulse);
-            this.pulse.setFocusable(false);
-            this.pulse.setClickable(false);
+        this.systolic.setText(systolicString);
+        this.systolic.setFocusable(false);
+        this.systolic.setClickable(false);
 
-            this.date.setText(date);
-            this.date.setFocusable(false);
-            this.date.setClickable(false);
+        this.diastolic.setText(diastolicString);
+        this.diastolic.setFocusable(false);
+        this.diastolic.setClickable(false);
+
+        this.map.setText(mapString);
+        this.map.setFocusable(false);
+        this.map.setClickable(false);
+
+        this.pulse.setText(pulseString);
+        this.pulse.setFocusable(false);
+        this.pulse.setClickable(false);
+
+        this.date.setText(dateString);
+        this.date.setFocusable(false);
+        this.date.setClickable(false);
 
     }
 
@@ -123,7 +174,7 @@ public class UserActivity extends Activity{
         return true;
     }
 
-    //User opens otpions menu
+    //User opens options menu
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch(item.getItemId()) {
@@ -136,6 +187,7 @@ public class UserActivity extends Activity{
                 email.setEnabled(true);
                 email.setFocusableInTouchMode(true);
                 email.setClickable(true);
+                table.setVisibility(View.INVISIBLE);
 
                 //Click listener for save button
                 b.setOnClickListener(new View.OnClickListener() {

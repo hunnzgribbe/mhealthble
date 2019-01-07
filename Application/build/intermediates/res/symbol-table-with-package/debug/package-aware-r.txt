@@ -867,6 +867,7 @@ string menu_disconnect
 string menu_scan
 string menu_setting
 string menu_stop
+string na_value_generic
 string no
 string no_data
 string permission_rationale
@@ -887,6 +888,7 @@ string unknown_device
 string unknown_service
 string weight_string
 string weight_unit
+string weight_unit_string
 string weight_value
 string yes
 style AlertDialog_AppCompat

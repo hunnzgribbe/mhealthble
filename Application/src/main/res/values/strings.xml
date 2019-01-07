@@ -21,6 +21,7 @@
     <string name="no">No!</string>
 
     <string name="weight_string">Weight</string>
+    <string name="weight_unit_string">Weight Unit</string>
     <string name="weight_unit">N.A.</string>
     <string name="weight_value">N.A.</string>
     <string name="bp_unit">N.A.</string>
@@ -35,6 +36,7 @@
     <string name="pulse_value">N.A.</string>
     <string name="date_string">Last Read</string>
     <string name="date_value">N.A.</string>
+    <string name="na_value_generic">N.A.</string>
 
     <!-- Menu items -->
     <string name="menu_connect">Connect</string>

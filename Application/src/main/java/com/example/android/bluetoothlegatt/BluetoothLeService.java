@@ -155,7 +155,7 @@ public class BluetoothLeService extends Service {
             weightObject.readValues(intent, characteristic);
             //Save values in db
             mydb = new DBHelper(this);
-            mydb.updateMhealthUserWeight(mydb.getLastUsersId(), weightObject.getWeightUnit(), weightObject.getWeightValue());
+            mydb.insertMhealthValuesWeight(mydb.getLastUsersId(), weightObject.getWeightUnit(), weightObject.getWeightValue(), weightObject.getDate());
         }
         //For Blood Pressure Device
         else if (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) {
@@ -164,7 +164,7 @@ public class BluetoothLeService extends Service {
             bpObject.readValues(intent, characteristic);
             //Save values in db
             mydb = new DBHelper(this);
-            mydb.updateMhealthUserbpm(mydb.getLastUsersId(), bpObject.getBP_UNIT(), bpObject.getBP_SYSTOLIC(), bpObject.getBP_DIASTOLIC(), bpObject.getBP_MAP(), bpObject.getBP_PULSE());
+            mydb.insertMhealthValuesBpm(mydb.getLastUsersId(), bpObject.getBP_UNIT(), bpObject.getBP_SYSTOLIC(), bpObject.getBP_DIASTOLIC(), bpObject.getBP_MAP(), bpObject.getBP_PULSE(), bpObject.getDate());
         }
         //All other devices (Generic)
         else {
@@ -176,7 +176,7 @@ public class BluetoothLeService extends Service {
                     stringBuilder.append(String.format("%02X ", byteChar));
                     intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
                     mydb = new DBHelper(this);
-                    mydb.updateMhealthUserWeight(mydb.getLastUsersId(), "Unkown Device", stringBuilder.toString());
+                    mydb.insertMhealthValues(mydb.getLastUsersId(), "Unkown Device", stringBuilder.toString(), "N.A.", "N.A.", "N.A.", "N.A.", "N.A.", "N.A.");
             }
         }
 

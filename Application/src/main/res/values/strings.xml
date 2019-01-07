@@ -9,7 +9,7 @@
     <string name="no_data">No data</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
-    <string name="title_devices">BLE Device Scan</string>
+    <string name="title_devices">Device Scan</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
 
     <string name="unknown_device">Unknown device</string>
@@ -17,8 +17,8 @@
     <string name="unknown_service">Unknown service</string>
 
     <string name="delete_contact">Are you really sure, you want to delete it.</string>
-    <string name="yes">Yes, do it!.</string>
-    <string name="no">No!.</string>
+    <string name="yes">Yes, do it!</string>
+    <string name="no">No!</string>
 
     <string name="weight_string">Weight</string>
     <string name="weight_unit">N.A.</string>

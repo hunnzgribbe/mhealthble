@@ -77,7 +77,7 @@ public class BluetoothLeService extends Service {
             UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
 
     public final static UUID UUID_BLOOD_PRESSURE_MEASUREMENT =
-            UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
+            UUID.fromString(SampleGattAttributes.BLOOD_PRESSURE_MEASUREMENT);
 
 
     // Implements callback methods for GATT events that the app cares about.  For example,

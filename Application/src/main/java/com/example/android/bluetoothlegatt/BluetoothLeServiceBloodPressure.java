@@ -11,12 +11,12 @@ import java.util.UUID;
 
 public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
 
-    public String BLOOD_PRESSURE_UNIT = "";
-    public String BLOOD_PRESSURE_SYSTOLIC = "";
-    public String BLOOD_PRESSURE_DIASTOLIC = "";
-    public String BLOOD_PRESSURE_MAP = "";
-    public String BLOOD_PRESSURE_PULSE = "";
-    public String DATE = "";
+    private String BLOOD_PRESSURE_UNIT = "";
+    private String BLOOD_PRESSURE_SYSTOLIC = "";
+    private String BLOOD_PRESSURE_DIASTOLIC = "";
+    private String BLOOD_PRESSURE_MAP = "";
+    private String BLOOD_PRESSURE_PULSE = "";
+    private String DATE = "";
     public final static UUID UUID_BLOOD_PRESSURE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.BLOOD_PRESSURE_MEASUREMENT);
 

@@ -21,27 +21,27 @@ import static com.example.android.bluetoothlegatt.DBHelper.*;
 //Primary for displaying the values and changing username
 public class UserActivity extends Activity{
 
-    DBHelper mydb;
-    TextView email;
-    TextView weightunit ;
-    TextView weightvalue;
-    TextView bpunit;
-    TextView systolic;
-    TextView diastolic;
-    TextView map;
-    TextView pulse;
-    TextView date;
-    TableLayout table;
-    Integer id;
-    String emailString;
-    String weightunitString;
-    String weightvalueString;
-    String bpunitString;
-    String systolicString;
-    String diastolicString;
-    String mapString;
-    String pulseString;
-    String dateString;
+    private DBHelper mydb;
+    private TextView email;
+    private TextView weightunit ;
+    private TextView weightvalue;
+    private TextView bpunit;
+    private TextView systolic;
+    private TextView diastolic;
+    private TextView map;
+    private TextView pulse;
+    private TextView date;
+    private TableLayout table;
+    private Integer id;
+    private String emailString;
+    private String weightunitString;
+    private String weightvalueString;
+    private String bpunitString;
+    private String systolicString;
+    private String diastolicString;
+    private String mapString;
+    private String pulseString;
+    private String dateString;
 
     //Gets called at opening the activity
     @Override
@@ -84,6 +84,7 @@ public class UserActivity extends Activity{
             }
         }
 
+        //Read out Arraylist for the Data
         for (int i = 0; i < mydb.getAllDataFromUser(id).size(); i++){
             String temp = mydb.getAllDataFromUser(id).get(i);
 
@@ -168,7 +169,7 @@ public class UserActivity extends Activity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+        //Initialize Optionsmeu
         getMenuInflater().inflate(R.menu.usermenu, menu);
 
         return true;
@@ -184,6 +185,7 @@ public class UserActivity extends Activity{
                 Button b = findViewById(R.id.buttonSaveUser2);
                 b.setVisibility(View.VISIBLE);
 
+                //Set fields
                 email.setEnabled(true);
                 email.setFocusableInTouchMode(true);
                 email.setClickable(true);

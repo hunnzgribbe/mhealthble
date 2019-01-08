@@ -9,9 +9,9 @@ import java.util.UUID;
 //Sub Class for measuring the Weight of the scale correctly
 public class BluetoothLeServiceWeight extends BluetoothLeService {
 
-    public String WEIGHT_UNIT = "";
-    public String WEIGHT_VALUE = "";
-    public String DATE = "";
+    private String WEIGHT_UNIT = "";
+    private String WEIGHT_VALUE = "";
+    private String DATE = "";
     public final static UUID UUID_WEIGHT_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
 

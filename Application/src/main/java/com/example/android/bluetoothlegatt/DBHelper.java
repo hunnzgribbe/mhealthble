@@ -280,7 +280,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
-
     //Get the ID of the last inserted user
     public Integer getLastUsersId() {
         int tempid = 0;

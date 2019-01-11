@@ -3,6 +3,8 @@ package com.example.android.bluetoothlegatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.UUID;
 
 
@@ -97,6 +99,13 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
             int flag = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
             String flagString = Integer.toBinaryString(flag);
             int offset=0;
+            boolean mmhgunit = false;
+            String systolic = "";
+            String diastolic = "";
+            String map = "";
+            String pulse = "";
+            double pulscheck = 0;
+
             for(int index = flagString.length(); 0 < index ; index--) {
                 String key = flagString.substring(index-1 , index);
 
@@ -105,32 +114,33 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
                         // mmHg
                         Log.d("SN", "mmHg");
                         intent.putExtra(BLOOD_PRESSURE_UNIT,"mmHg");
-                        this.setBP_UNIT("mmHg");
+                        mmhgunit = true;
+                        //this.setBP_UNIT("mmHg");
                     }
                     else {
                         // kPa
                         Log.d("SN", "kPa");
+                        mmhgunit = false;
                         intent.putExtra(BLOOD_PRESSURE_UNIT,"kPa");
-                        this.setBP_UNIT("kPa");
+                        //this.setBP_UNIT("kPa");
                     }
                     // Unit converting
                     offset+=1;
-                    String systolic = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
+                    systolic = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
                     Log.d("SN", "Systolic :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
                     intent.putExtra(BLOOD_PRESSURE_SYSTOLIC, systolic);
-                    this.setBP_SYSTOLIC(systolic);
 
                     offset+=2;
-                    String diastolic = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
+                    diastolic = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
                     Log.d("SN", "Diastolic :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
                     intent.putExtra(BLOOD_PRESSURE_DIASTOLIC, diastolic);
-                    this.setBP_DIASTOLIC(diastolic);
+
 
                     offset+=2;
-                    String map = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
+                    map = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
                     Log.d("SN", "Mean Arterial Pressure :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
                     intent.putExtra(BLOOD_PRESSURE_MAP, map);
-                    this.setBP_MAP(map);
+
                     offset+=2;
                 }
                 else if(index == flagString.length()-1) {
@@ -155,11 +165,12 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
                 else if(index == flagString.length()-2) {
                     if(key.equals("1")) {
                         // Pulse Rate
-                        String pulse = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
+                        pulse = Double.toString(Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
                         Log.d("SN", "Pulse Rate :"+String.format("%f", characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)));
                         intent.putExtra(BLOOD_PRESSURE_PULSE, pulse);
-                        this.setBP_PULSE(pulse);
+                        pulscheck = (Math.round(characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_SFLOAT, offset)*100)/100.0);
                         offset+=2;
+
                     }
                 }
                 else if(index == flagString.length()-3) {
@@ -203,6 +214,17 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
                 }*/
 
             }
+            //Save last values (3 pair values per reading, the last one is the actual value to use)
+            if (pulscheck < 500){
+                if(mmhgunit){ this.setBP_UNIT("mmHg");}
+                else {this.setBP_UNIT("kPa");}
+                this.setBP_SYSTOLIC(systolic);
+                this.setBP_DIASTOLIC(diastolic);
+                this.setBP_MAP(map);
+                this.setBP_PULSE(pulse);
+            }
+
+
         }
 
     }

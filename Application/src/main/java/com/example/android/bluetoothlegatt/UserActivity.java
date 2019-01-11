@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +15,11 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import static com.example.android.bluetoothlegatt.DBHelper.*;
 
 //User Activity, accessed from the options menu
@@ -22,6 +27,7 @@ import static com.example.android.bluetoothlegatt.DBHelper.*;
 public class UserActivity extends Activity{
 
     private DBHelper mydb;
+
     private TextView email;
     private TextView weightunit ;
     private TextView weightvalue;
@@ -30,18 +36,37 @@ public class UserActivity extends Activity{
     private TextView diastolic;
     private TextView map;
     private TextView pulse;
-    private TextView date;
+    private TextView datew;
+    private TextView dateb;
+
     private TableLayout table;
+
     private Integer id;
     private String emailString;
     private String weightunitString;
+    private String weightunitString2;
     private String weightvalueString;
+    private String weightvalueString2;
     private String bpunitString;
+    private String bpunitString2;
     private String systolicString;
+    private String systolicString2;
     private String diastolicString;
+    private String diastolicString2;
     private String mapString;
+    private String mapString2;
     private String pulseString;
-    private String dateString;
+    private String pulseString2;
+    private String genericUnitString;
+    private String genericValueString;
+    private String wdateString;
+    private String bdateString;
+    private String gdateString;
+    private String wdateString2;
+    private String bdateString2;
+    private String gdateString2;
+    private boolean weightunitkg;
+    private boolean bpmunithmmhg;
 
     //Gets called at opening the activity
     @Override
@@ -58,71 +83,242 @@ public class UserActivity extends Activity{
         diastolic = findViewById(R.id.textViewDiastolicValue);
         map = findViewById(R.id.textViewMapValue);
         pulse = findViewById(R.id.textViewPulseValue);
-        date = findViewById(R.id.textViewDateValue);
+        datew = findViewById(R.id.textViewWeightDate);
+        dateb = findViewById(R.id.textViewbpmDate);
+        GraphView graph1 = (GraphView) findViewById(R.id.graphweight);
+        GraphView graph2 = (GraphView) findViewById(R.id.graphsystolic);
+        GraphView graph3 = (GraphView) findViewById(R.id.graphdiastolic);
+        GraphView graph4 = (GraphView) findViewById(R.id.graphpulse);
+        GraphView graph5 = (GraphView) findViewById(R.id.graphgeneric);
 
+        //Set variables
         weightunitString = "";
+        weightunitString2 = "";
         weightvalueString = "";
+        weightvalueString2 = "";
         bpunitString = "";
         systolicString = "";
         diastolicString = "";
         mapString = "";
         pulseString = "";
-        dateString = "";
+        genericUnitString = "";
+        genericValueString = "";
+        bpunitString2 = "";
+        systolicString2 = "";
+        diastolicString2 = "";
+        mapString2 = "";
+        pulseString2 = "";
+        wdateString = "";
+        bdateString = "";
+        gdateString = "";
+        wdateString2 = "";
+        bdateString2 = "";
+        gdateString2 = "";
+        weightunitkg = false;
+        bpmunithmmhg = false;
 
         //Get last db-user-id which was created
         id = mydb.getLastUsersId();
 
+
+        //Set Graphs for the data
+        BarGraphSeries<DataPoint> weightdata = new BarGraphSeries<>();
+        BarGraphSeries<DataPoint> bpmdata1 = new BarGraphSeries<>();
+        BarGraphSeries<DataPoint> bpmdata2 = new BarGraphSeries<>();
+        BarGraphSeries<DataPoint> bpmdata3 = new BarGraphSeries<>();
+        BarGraphSeries<DataPoint> genericdata = new BarGraphSeries<>();
+
         //Read out the Arraylists from the db class
         //Show Email
         for (int i = 0; i < mydb.getAllUsers().size(); i++){
-            switch (mydb.getAllUsers().get(i)) {
-                case MHEALTH_COLUMN_EMAIL:
-                    emailString = mydb.getAllUsers().get(i+1);
-                    break;
-                default:
-                    break;
+            String temp = mydb.getAllUsers().get(i);
+
+            if (temp == MHEALTH_COLUMN_EMAIL){
+                emailString = mydb.getAllUsers().get(i+1);
             }
         }
 
-        //Read out Arraylist for the Data
-        for (int i = 0; i < mydb.getAllDataFromUser(id).size(); i++){
-            String temp = mydb.getAllDataFromUser(id).get(i);
 
-            if (temp == MHEALTH_COLUMN_WEIGHT_UNIT){
-                weightunitString += mydb.getAllDataFromUser(id).get(i+1);
-                weightunitString += "\n";
+        //Read out Arraylist for the WeightData & fill in the datapoint for the graphs
+        for (int i = 0; i < mydb.getAllWeightDataFromUser(id).size(); i++){
+            String temp = mydb.getAllWeightDataFromUser(id).get(i);
+
+            if ((temp == MHEALTH_COLUMN_WEIGHT_UNIT) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+                weightunitString = mydb.getAllWeightDataFromUser(id).get(i+1);
+                //for table:
+                weightunitString2 += weightunitString +"\n";
+
+                if (weightunitString.startsWith("K")){
+                    weightunitkg = true;
+                } else{ weightunitkg = false; }
+
             }
-            else if (temp == MHEALTH_COLUMN_WEIGHT_VALUE){
-                weightvalueString += mydb.getAllDataFromUser(id).get(i+1);
-                weightvalueString += "\n";
+            else if ((temp == MHEALTH_COLUMN_WEIGHT_VALUE) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null) ){
+                weightvalueString = mydb.getAllWeightDataFromUser(id).get(i+1);
+                weightvalueString2 += weightvalueString +"\n";
+                DataPoint point = new DataPoint(i, Double.parseDouble(weightvalueString));
+                weightdata.appendData(point, true, i);
             }
-            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT){
-                bpunitString += mydb.getAllDataFromUser(id).get(i+1);
-                bpunitString += "\n";
-            }
-            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC){
-                systolicString += mydb.getAllDataFromUser(id).get(i+1);
-                systolicString += "\n";
-            }
-            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC){
-                diastolicString += mydb.getAllDataFromUser(id).get(i+1);
-                diastolicString += "\n";
-            }
-            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_MAP){
-                mapString += mydb.getAllDataFromUser(id).get(i+1);
-                mapString += "\n";
-            }
-            else if (temp == MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE){
-                pulseString += mydb.getAllDataFromUser(id).get(i+1);
-                pulseString += "\n";
-            }
-            else if (temp == MHEALTH_COLUMN_LAST_READ_TIME){
-                dateString += mydb.getAllDataFromUser(id).get(i+1);
-                dateString += "\n";
+
+            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_WEIGHT) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+                wdateString = mydb.getAllWeightDataFromUser(id).get(i+1);
+                wdateString2 += wdateString +"\n";
+                //DataPoint point = new DataPoint(i, Double.parseDouble(wdateString));
+                //weightdata.appendData(point, true, i);
+
             }
 
         }
 
+        //Read out Arraylist for the BPMData & fill in the datapoint for the graphs
+        for (int i = 0; i < mydb.getAllBPMDataFromUser(id).size(); i++){
+            String temp = mydb.getAllBPMDataFromUser(id).get(i);
+
+            if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+                bpunitString = mydb.getAllBPMDataFromUser(id).get(i+1);
+                bpunitString2 += bpunitString +"\n";
+                if (bpunitString.startsWith("m")){ bpmunithmmhg = true;
+                }
+                else{ bpmunithmmhg = false; }
+            }
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+                systolicString = mydb.getAllBPMDataFromUser(id).get(i+1);
+                systolicString2 += systolicString +"\n";
+                DataPoint point = new DataPoint(i, Double.parseDouble(systolicString));
+                bpmdata1.appendData(point, true, i);
+            }
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+                diastolicString = mydb.getAllBPMDataFromUser(id).get(i+1);
+                diastolicString2 += diastolicString +"\n";
+                DataPoint point = new DataPoint(i, Double.parseDouble(diastolicString));
+                bpmdata2.appendData(point, true, i);
+            }
+            /* //Not relevant
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_MAP) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+                mapString = mydb.getAllDataFromUser(id).get(i+1);
+                dp2[i] = new DataPoint(i, Integer.parseInt(mapString));
+                DataPoint point = new DataPoint(i, Double.parseDouble(mapString));
+                bpmdata4.appendData(point, true, i);
+                //mapString += "\n";
+            }
+            */
+
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+                pulseString = mydb.getAllBPMDataFromUser(id).get(i+1);
+                pulseString2 += pulseString +"\n";
+                DataPoint point = new DataPoint(i, Double.parseDouble(pulseString));
+                bpmdata3.appendData(point, true, i);
+            }
+
+            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_BPM) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+                bdateString = mydb.getAllBPMDataFromUser(id).get(i+1);
+                bdateString2 += bdateString +"\n";
+                //DataPoint point = new DataPoint(i, Double.parseDouble(bdateString));
+                //bpmdata1.appendData(point, true, i);
+            }
+
+
+        }
+
+        //Read out Arraylist for the GenericData & fill in the datapoint for the graphs
+        for (int i = 0; i < mydb.getAllGenericDataFromUser(id).size(); i++){
+            String temp = mydb.getAllGenericDataFromUser(id).get(i);
+
+            if ((temp == MHEALTH_COLUMN_GENERIC_UNIT) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null)){
+                genericUnitString = mydb.getAllGenericDataFromUser(id).get(i+1);
+            }
+            else if ((temp == MHEALTH_COLUMN_GENERIC_VALUE) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null)) {
+                genericValueString = mydb.getAllGenericDataFromUser(id).get(i + 1);
+                DataPoint point = new DataPoint(i, Double.parseDouble(genericValueString));
+                genericdata.appendData(point, true, i);
+            }
+            /*
+            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_GENERIC) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+                gdateString = mydb.getAllGenericDataFromUser(id).get(i+1);
+                DataPoint point = new DataPoint(i, Double.parseDouble(gdateString));
+                genericdata.appendData(point, true, i);
+                dp3[i] = new DataPoint(i, Integer.parseInt(gdateString));
+                //dateString += "\n";
+            }
+            */
+
+        }
+
+        //Show Graph:
+        //Graph titles:
+        if (weightunitkg){
+            weightdata.setTitle("Weight in KG");
+        }else{weightdata.setTitle("Weight in LBS"); }
+
+        if (bpmunithmmhg){
+            bpmdata1.setTitle("Systolic in "+bpunitString);
+            bpmdata2.setTitle("Diastolic in "+bpunitString);
+            bpmdata3.setTitle("Pulse in BPM");
+        }else{
+            bpmdata1.setTitle("Systolic in kPa");
+            bpmdata2.setTitle("Diastolic in kPa");
+            bpmdata3.setTitle("Pulse in BPM");}
+
+        genericdata.setTitle("Generic Device");
+
+        //Add Data to graphs
+        graph1.addSeries(weightdata);
+        graph2.addSeries(bpmdata1);
+        graph3.addSeries(bpmdata2);
+        graph4.addSeries(bpmdata3);
+        graph5.addSeries(genericdata);
+
+        //Set graph parameters
+        graph1.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph1.getLegendRenderer().setVisible(true);
+        graph1.getLegendRenderer().setTextSize(25);
+        graph1.getLegendRenderer().setTextColor(Color.BLACK);
+        graph1.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        graph2.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph2.getLegendRenderer().setVisible(true);
+        graph2.getLegendRenderer().setTextSize(25);
+        graph2.getLegendRenderer().setTextColor(Color.BLACK);
+        graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        graph3.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph3.getLegendRenderer().setVisible(true);
+        graph3.getLegendRenderer().setTextSize(25);
+        graph3.getLegendRenderer().setTextColor(Color.BLACK);
+        graph3.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        graph4.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph4.getLegendRenderer().setVisible(true);
+        graph4.getLegendRenderer().setTextSize(25);
+        graph4.getLegendRenderer().setTextColor(Color.BLACK);
+        graph4.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        graph5.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph5.getLegendRenderer().setVisible(true);
+        graph5.getLegendRenderer().setTextSize(25);
+        graph5.getLegendRenderer().setTextColor(Color.BLACK);
+        graph5.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        weightdata.setSpacing(50);
+        bpmdata1.setSpacing(50);
+        bpmdata2.setSpacing(50);
+        bpmdata3.setSpacing(50);
+        genericdata.setSpacing(50);
+
+        weightdata.setDrawValuesOnTop(true);
+        bpmdata1.setDrawValuesOnTop(true);
+        bpmdata2.setDrawValuesOnTop(true);
+        bpmdata3.setDrawValuesOnTop(true);
+        genericdata.setDrawValuesOnTop(true);
+
+        weightdata.setValuesOnTopColor(Color.RED);
+        bpmdata1.setValuesOnTopColor(Color.RED);
+        bpmdata2.setValuesOnTopColor(Color.RED);
+        bpmdata3.setValuesOnTopColor(Color.RED);
+        genericdata.setValuesOnTopColor(Color.RED);
+
+
+        //Other options: Save button and table
         Button b = findViewById(R.id.buttonSaveUser2);
         b.setVisibility(View.INVISIBLE);
 
@@ -133,37 +329,41 @@ public class UserActivity extends Activity{
         this.email.setFocusable(false);
         this.email.setClickable(false);
 
-        this.weightvalue.setText(weightvalueString);
+        this.weightvalue.setText(weightvalueString2);
         this.weightvalue.setFocusable(false);
         this.weightvalue.setClickable(false);
 
-        this.weightunit.setText(weightunitString);
+        this.weightunit.setText(weightunitString2);
         this.weightunit.setFocusable(false);
         this.weightunit.setClickable(false);
 
-        this.bpunit.setText(bpunitString);
+        this.bpunit.setText(bpunitString2);
         this.bpunit.setFocusable(false);
         this.bpunit.setClickable(false);
 
-        this.systolic.setText(systolicString);
+        this.systolic.setText(systolicString2);
         this.systolic.setFocusable(false);
         this.systolic.setClickable(false);
 
-        this.diastolic.setText(diastolicString);
+        this.diastolic.setText(diastolicString2);
         this.diastolic.setFocusable(false);
         this.diastolic.setClickable(false);
 
-        this.map.setText(mapString);
+        this.map.setText(mapString2);
         this.map.setFocusable(false);
         this.map.setClickable(false);
 
-        this.pulse.setText(pulseString);
+        this.pulse.setText(pulseString2);
         this.pulse.setFocusable(false);
         this.pulse.setClickable(false);
 
-        this.date.setText(dateString);
-        this.date.setFocusable(false);
-        this.date.setClickable(false);
+        this.datew.setText(wdateString2);
+        this.datew.setFocusable(false);
+        this.datew.setClickable(false);
+
+        this.dateb.setText(bdateString2);
+        this.dateb.setFocusable(false);
+        this.dateb.setClickable(false);
 
     }
 

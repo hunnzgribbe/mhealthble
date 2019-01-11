@@ -1,134 +1,139 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:1-67:12
-INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:1-67:12
-INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:1-67:12
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:2:1-53:12
+INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:2:1-53:12
+INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:2:1-53:12
 MERGED from [com.android.support:support-v13:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v13-27.0.2.aar/45f25a36bb152fae5e6f3886ed7c4120/AndroidManifest.xml:17:1-22:12
+MERGED from [com.jjoe64:graphview:4.2.1] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/graphview-4.2.1.aar/5304bac87d31583ee9f5a5bb8dd97aa3/AndroidManifest.xml:2:1-14:12
 MERGED from [com.android.support:support-v4:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/6b4736ffcf516f5f63432bcbc948e9ba/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:cardview-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/50fa043701ba8a040a103b7cbe95d03b/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:appcompat-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/c388e8290b6924fdb59a5719f400adb0/AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-fragment:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/e63474fe5728ffeb53d3bdb88c0329f1/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-core-utils:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/b29800b073fd149392b7bdd2b0db5724/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:animated-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/db0ab56a9682b43c18c501b4af7cbc80/AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/e0a4c24e36a3a106bafd6527c413a564/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:runtime:1.0.3] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/61624ceb953a271d83d89eba7b246519/AndroidManifest.xml:17:1-24:12
-INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:1-67:12
-INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:1-67:12
+INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:2:1-53:12
+INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:2:1-53:12
 	package
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:17:5-50
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:3:5-50
 	android:versionName
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:19:5-30
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:5:5-30
 		INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml
 		INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:11-69
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:18:5-28
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:4:5-28
 		INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml
 		INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml
 uses-feature#android.hardware.bluetooth_le
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:30:5-32:35
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:16:5-18:35
 	android:required
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:32:9-32
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:18:9-32
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:31:9-53
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:17:9-53
 uses-permission#android.permission.BLUETOOTH
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:34:5-68
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:20:5-68
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:34:22-65
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:20:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:35:5-74
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:21:5-74
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:35:22-71
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:21:22-71
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:36:5-79
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:36:22-76
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:22:22-76
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:37:5-81
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:23:5-81
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:37:22-78
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:23:22-78
 uses-permission#android.permission.GET_ACCOUNTS
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:40:5-71
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:26:5-71
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:40:22-68
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:26:22-68
 uses-permission#android.permission.READ_PROFILE
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:41:5-71
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:27:5-71
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:41:22-68
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:27:22-68
 uses-permission#android.permission.READ_CONTACTS
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:42:5-72
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:28:5-72
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:42:22-69
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:28:22-69
 application
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:44:5-65:19
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:30:5-51:19
+MERGED from [com.jjoe64:graphview:4.2.1] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/graphview-4.2.1.aar/5304bac87d31583ee9f5a5bb8dd97aa3/AndroidManifest.xml:11:5-12:19
+MERGED from [com.jjoe64:graphview:4.2.1] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/graphview-4.2.1.aar/5304bac87d31583ee9f5a5bb8dd97aa3/AndroidManifest.xml:11:5-12:19
 	android:label
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:46:9-41
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:32:9-41
 	android:icon
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:45:9-45
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:31:9-45
 	android:theme
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:47:9-56
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:33:9-56
 activity#com.example.android.bluetoothlegatt.DeviceScanActivity
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:48:9-56:20
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:34:9-42:20
 	android:label
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:50:13-45
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:36:13-45
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:49:13-47
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:35:13-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:51:13-55:29
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:37:13-41:29
 action#android.intent.action.MAIN
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:52:17-69
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:38:17-69
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:52:25-66
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:38:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:54:17-77
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:40:17-77
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:54:27-74
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:40:27-74
 activity#com.example.android.bluetoothlegatt.DeviceControlActivity
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:57:9-59
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:43:9-59
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:57:19-56
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:43:19-56
 activity#com.example.android.bluetoothlegatt.UserActivity
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:58:9-50
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:44:9-50
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:58:19-47
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:44:19-47
 activity#com.example.android.bluetoothlegatt.UserAddActivity
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:59:9-53
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:45:9-53
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:59:19-50
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:45:19-50
 service#com.example.android.bluetoothlegatt.BluetoothLeService
-ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:61:9-63:38
+ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:47:9-49:38
 	android:enabled
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:63:13-35
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:49:13-35
 	android:name
-		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:62:13-47
+		ADDED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml:48:13-47
 uses-sdk
 INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml
 INJECTED from /home/hunnzgribbe/mhealthble/Application/src/main/AndroidManifest.xml
 MERGED from [com.android.support:support-v13:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v13-27.0.2.aar/45f25a36bb152fae5e6f3886ed7c4120/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-v13:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v13-27.0.2.aar/45f25a36bb152fae5e6f3886ed7c4120/AndroidManifest.xml:20:5-44
+MERGED from [com.jjoe64:graphview:4.2.1] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/graphview-4.2.1.aar/5304bac87d31583ee9f5a5bb8dd97aa3/AndroidManifest.xml:7:5-9:41
+MERGED from [com.jjoe64:graphview:4.2.1] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/graphview-4.2.1.aar/5304bac87d31583ee9f5a5bb8dd97aa3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:support-v4:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/6b4736ffcf516f5f63432bcbc948e9ba/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-v4:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/6b4736ffcf516f5f63432bcbc948e9ba/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:cardview-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/50fa043701ba8a040a103b7cbe95d03b/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:cardview-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/50fa043701ba8a040a103b7cbe95d03b/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:appcompat-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/c388e8290b6924fdb59a5719f400adb0/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:appcompat-v7:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/c388e8290b6924fdb59a5719f400adb0/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-fragment:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/e63474fe5728ffeb53d3bdb88c0329f1/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-fragment:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/e63474fe5728ffeb53d3bdb88c0329f1/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-core-utils:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/b29800b073fd149392b7bdd2b0db5724/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-core-utils:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/b29800b073fd149392b7bdd2b0db5724/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:animated-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/db0ab56a9682b43c18c501b4af7cbc80/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:animated-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/db0ab56a9682b43c18c501b4af7cbc80/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/e0a4c24e36a3a106bafd6527c413a564/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/e0a4c24e36a3a106bafd6527c413a564/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/a20a6056db072f3a7e48bbb50f4300c6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/8f13c0a6d6535d118b14a17a18cf9f43/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-compat:27.0.2] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/80bda5b967658a81461553eeb0fe17b3/AndroidManifest.xml:20:5-44
 MERGED from [android.arch.lifecycle:runtime:1.0.3] /home/hunnzgribbe/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/61624ceb953a271d83d89eba7b246519/AndroidManifest.xml:20:5-22:41

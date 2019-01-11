@@ -57,7 +57,7 @@ public class DeviceScanActivity extends ListActivity {
     private Handler mHandler;
     private static final int REQUEST_PERMISSION_LOCATION = 1;
     private static final int REQUEST_PERMISSION_ENABLE_BT = 1;
-    // Stops scanning for ble devices after 30 seconds.
+    // Stops scanning for ble devices after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
     DBHelper mydb;
     public int id;

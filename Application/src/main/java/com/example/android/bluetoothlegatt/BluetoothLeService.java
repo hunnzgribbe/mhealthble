@@ -176,7 +176,7 @@ public class BluetoothLeService extends Service {
                     stringBuilder.append(String.format("%02X ", byteChar));
                     intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
                     mydb = new DBHelper(this);
-                    mydb.insertMhealthValues(mydb.getLastUsersId(), "Unkown Device", stringBuilder.toString(), "N.A.", "N.A.", "N.A.", "N.A.", "N.A.", "N.A.");
+                    mydb.insertMhealthValuesGeneric(mydb.getLastUsersId(), "Unkown Device", stringBuilder.toString(), getCurrentDate());
             }
         }
 
@@ -378,7 +378,7 @@ public class BluetoothLeService extends Service {
      */
     public String getCurrentDate(){
         String date = "";
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
         date = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + ".";
         date += Integer.toString(calendar.get(Calendar.MONTH)) + ".";
         date += Integer.toString(calendar.get(Calendar.YEAR)) + ";";

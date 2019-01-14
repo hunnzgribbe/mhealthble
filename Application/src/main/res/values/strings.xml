@@ -47,6 +47,7 @@
     <string name="delete_user">Delete User</string>
     <string name="edit_user">Edit User</string>
     <string name="menu_setting">User Settings</string>
+    <string name="menu_fhir">FHIR upload</string>
 
     <!-- User Activity -->
 
@@ -65,5 +66,15 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Patient Activity -->
+    <string name="patient_id">000000</string>
+    <string name="patient_id_info">Enter your Patient ID, handed over from the Doc!</string>
+    <string name="server">http://...</string>
+    <string name="server_info">Enter the FHIR server address:</string>
+    <string name="upload_info">Press the button below, to upload your Healthdata to FHIR:</string>
+    <string name="savebuttonpatient">Save Patient ID</string>
+    <string name="savebuttonserver">Save Server</string>
+    <string name="uploadbuttonpatient">Upload to FHIR!</string>
 
 </resources>

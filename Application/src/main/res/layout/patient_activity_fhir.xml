@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".PatientActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:paddingBottom="@dimen/vertical_page_margin"
+        android:paddingLeft="@dimen/horizontal_page_margin"
+        android:paddingRight="@dimen/horizontal_page_margin"
+        android:paddingTop="@dimen/vertical_page_margin">
+
+        <TextView
+            android:id="@+id/textViewPatientIdInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/patient_id_info"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editTextPatientID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/patient_id"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:layout_below="@id/textViewPatientIdInfo"/>
+
+        <Button
+            android:id="@+id/buttonSavePatientID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextPatientID"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:onClick="run"
+            android:text="@string/savebuttonpatient" />
+
+        <TextView
+            android:id="@+id/textViewServerInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/server_info"
+            android:layout_below="@id/buttonSavePatientID"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editTextServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/server"
+            android:ems="15"
+            android:inputType="textWebEditText"
+            android:layout_below="@id/textViewServerInfo"/>
+
+        <Button
+            android:id="@+id/buttonSaveServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextServer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:onClick="run"
+            android:text="@string/savebuttonserver" />
+
+        <TextView
+            android:id="@+id/textViewUploadInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/upload_info"
+            android:layout_below="@id/buttonSaveServer"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/buttonUploadFHIR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewUploadInfo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:onClick="run"
+            android:text="@string/uploadbuttonpatient" />
+    </RelativeLayout>
+</ScrollView>

@@ -34,9 +34,12 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * For a selected BLE device, this Activity provides the user interface to connect, display data,
@@ -68,6 +71,58 @@ public class DeviceControlActivity extends Activity {
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
+
+    public final static UUID UUID_HEART_RATE_MEASUREMENT =
+            UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
+
+    public final static UUID UUID_WEIGHT_MEASUREMENT =
+            UUID.fromString(SampleGattAttributes.WEIGHT_MEASUREMENT);
+
+    public final static UUID UUID_BLOOD_PRESSURE_MEASUREMENT =
+            UUID.fromString(SampleGattAttributes.BLOOD_PRESSURE_MEASUREMENT);
+
+    //Method for reading out the data from devices automatically after tapping on the device at the main scanning activity
+    private void readOutData (ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics){
+
+        if (mGattCharacteristics != null) {
+
+            for (int i = 0; i < mGattCharacteristics.size(); i++)
+            {
+                for (int j = 0; j < mGattCharacteristics.get(i).size(); j++)
+                {
+                    BluetoothGattCharacteristic characteristic = mGattCharacteristics.get(i).get(j);
+
+                    //TODO: Extend here the UUIDs for known Devices to get the data automatically from it after tapping on it at the main scanning activity
+                    if ( (UUID_WEIGHT_MEASUREMENT.equals(characteristic.getUuid())) || (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) ) {
+
+                        int charaProp = characteristic.getProperties();
+                        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
+                            // If there is an active notification on a characteristic, clear
+                            // it first so it doesn't update the data field on the user interface.
+                            if (mNotifyCharacteristic != null) {
+                                mBluetoothLeService.setCharacteristicNotification(
+                                        mNotifyCharacteristic, false);
+                                mNotifyCharacteristic = null;
+                            }
+                            mBluetoothLeService.readCharacteristic(characteristic);
+                            Toast.makeText(getApplicationContext(), "Found Data :)",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+                            mNotifyCharacteristic = characteristic;
+                            mBluetoothLeService.setCharacteristicNotification(
+                                    characteristic, true);
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -111,6 +166,8 @@ public class DeviceControlActivity extends Activity {
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
+                //TODO: Automatically read out the data
+                readOutData(mGattCharacteristics);
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
@@ -180,6 +237,7 @@ public class DeviceControlActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
     }
 
     @Override

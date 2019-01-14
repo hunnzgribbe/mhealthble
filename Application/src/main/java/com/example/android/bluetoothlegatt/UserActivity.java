@@ -29,7 +29,7 @@ public class UserActivity extends Activity{
     private DBHelper mydb;
 
     private TextView email;
-    private TextView weightunit ;
+    private TextView weightunit;
     private TextView weightvalue;
     private TextView bpunit;
     private TextView systolic;
@@ -67,6 +67,10 @@ public class UserActivity extends Activity{
     private String gdateString2;
     private boolean weightunitkg;
     private boolean bpmunithmmhg;
+
+    private int counter1;
+    private int counter2;
+    private int counter3;
 
     //Gets called at opening the activity
     @Override
@@ -116,6 +120,9 @@ public class UserActivity extends Activity{
         gdateString2 = "";
         weightunitkg = false;
         bpmunithmmhg = false;
+        counter1 = 0;
+        counter2 = 0;
+        counter3 = 0;
 
         //Get last db-user-id which was created
         id = mydb.getLastUsersId();
@@ -133,17 +140,17 @@ public class UserActivity extends Activity{
         for (int i = 0; i < mydb.getAllUsers().size(); i++){
             String temp = mydb.getAllUsers().get(i);
 
-            if (temp == MHEALTH_COLUMN_EMAIL){
+            if (( temp == MHEALTH_COLUMN_EMAIL)  && (mydb.getAllUsers().get(i+1) != null) && (mydb.getAllUsers().get(i+1).length() > 0)){
                 emailString = mydb.getAllUsers().get(i+1);
             }
         }
 
-
+        counter1 = 0;
         //Read out Arraylist for the WeightData & fill in the datapoint for the graphs
         for (int i = 0; i < mydb.getAllWeightDataFromUser(id).size(); i++){
             String temp = mydb.getAllWeightDataFromUser(id).get(i);
 
-            if ((temp == MHEALTH_COLUMN_WEIGHT_UNIT) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+            if ((temp == MHEALTH_COLUMN_WEIGHT_UNIT) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)&& (mydb.getAllWeightDataFromUser(id).get(i+1).length() > 0)){
                 weightunitString = mydb.getAllWeightDataFromUser(id).get(i+1);
                 //for table:
                 weightunitString2 += weightunitString +"\n";
@@ -153,14 +160,16 @@ public class UserActivity extends Activity{
                 } else{ weightunitkg = false; }
 
             }
-            else if ((temp == MHEALTH_COLUMN_WEIGHT_VALUE) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null) ){
+            else if ((temp == MHEALTH_COLUMN_WEIGHT_VALUE) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null) && (mydb.getAllWeightDataFromUser(id).get(i+1).length() > 0)){
+                counter1++;
                 weightvalueString = mydb.getAllWeightDataFromUser(id).get(i+1);
                 weightvalueString2 += weightvalueString +"\n";
-                DataPoint point = new DataPoint(i, Double.parseDouble(weightvalueString));
-                weightdata.appendData(point, true, i);
+                DataPoint point = new DataPoint(counter1, Double.parseDouble(weightvalueString));
+                weightdata.appendData(point, true, counter1);
+
             }
 
-            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_WEIGHT) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_WEIGHT) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null) && (mydb.getAllWeightDataFromUser(id).get(i+1).length() > 0)){
                 wdateString = mydb.getAllWeightDataFromUser(id).get(i+1);
                 wdateString2 += wdateString +"\n";
                 //DataPoint point = new DataPoint(i, Double.parseDouble(wdateString));
@@ -170,31 +179,38 @@ public class UserActivity extends Activity{
 
         }
 
+        counter1 = 0;
+        counter2 = 0;
+        counter3 = 0;
         //Read out Arraylist for the BPMData & fill in the datapoint for the graphs
         for (int i = 0; i < mydb.getAllBPMDataFromUser(id).size(); i++){
             String temp = mydb.getAllBPMDataFromUser(id).get(i);
 
-            if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+            if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null) && (mydb.getAllBPMDataFromUser(id).get(i+1).length() > 0)){
                 bpunitString = mydb.getAllBPMDataFromUser(id).get(i+1);
                 bpunitString2 += bpunitString +"\n";
                 if (bpunitString.startsWith("m")){ bpmunithmmhg = true;
                 }
                 else{ bpmunithmmhg = false; }
             }
-            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null) && (mydb.getAllBPMDataFromUser(id).get(i+1).length() > 0)){
+                counter1++;
                 systolicString = mydb.getAllBPMDataFromUser(id).get(i+1);
                 systolicString2 += systolicString +"\n";
-                DataPoint point = new DataPoint(i, Double.parseDouble(systolicString));
-                bpmdata1.appendData(point, true, i);
+                DataPoint point = new DataPoint(counter1, Double.parseDouble(systolicString));
+                bpmdata1.appendData(point, true, counter1);
+
             }
-            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null) && (mydb.getAllBPMDataFromUser(id).get(i+1).length() > 0)){
+                counter2++;
                 diastolicString = mydb.getAllBPMDataFromUser(id).get(i+1);
                 diastolicString2 += diastolicString +"\n";
-                DataPoint point = new DataPoint(i, Double.parseDouble(diastolicString));
-                bpmdata2.appendData(point, true, i);
+                DataPoint point = new DataPoint(counter2, Double.parseDouble(diastolicString));
+                bpmdata2.appendData(point, true, counter2);
+
             }
             /* //Not relevant
-            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_MAP) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_MAP) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null) && (mydb.getAllBPMDataFromUser(id).get(i+1).length() > 0)){
                 mapString = mydb.getAllDataFromUser(id).get(i+1);
                 dp2[i] = new DataPoint(i, Integer.parseInt(mapString));
                 DataPoint point = new DataPoint(i, Double.parseDouble(mapString));
@@ -203,14 +219,15 @@ public class UserActivity extends Activity{
             }
             */
 
-            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null) && (mydb.getAllBPMDataFromUser(id).get(i+1).length() > 0)){
+                counter3++;
                 pulseString = mydb.getAllBPMDataFromUser(id).get(i+1);
                 pulseString2 += pulseString +"\n";
-                DataPoint point = new DataPoint(i, Double.parseDouble(pulseString));
-                bpmdata3.appendData(point, true, i);
+                DataPoint point = new DataPoint(counter3, Double.parseDouble(pulseString));
+                bpmdata3.appendData(point, true, counter3);
             }
 
-            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_BPM) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_BPM) && (mydb.getAllBPMDataFromUser(id).get(i+1) != null) && (mydb.getAllBPMDataFromUser(id).get(i+1).length() > 0)){
                 bdateString = mydb.getAllBPMDataFromUser(id).get(i+1);
                 bdateString2 += bdateString +"\n";
                 //DataPoint point = new DataPoint(i, Double.parseDouble(bdateString));
@@ -220,20 +237,22 @@ public class UserActivity extends Activity{
 
         }
 
+        counter1 = 0;
         //Read out Arraylist for the GenericData & fill in the datapoint for the graphs
         for (int i = 0; i < mydb.getAllGenericDataFromUser(id).size(); i++){
             String temp = mydb.getAllGenericDataFromUser(id).get(i);
 
-            if ((temp == MHEALTH_COLUMN_GENERIC_UNIT) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null)){
+            if ((temp == MHEALTH_COLUMN_GENERIC_UNIT) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null) && (mydb.getAllGenericDataFromUser(id).get(i+1).length() > 0)){
                 genericUnitString = mydb.getAllGenericDataFromUser(id).get(i+1);
             }
-            else if ((temp == MHEALTH_COLUMN_GENERIC_VALUE) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null)) {
+            else if ((temp == MHEALTH_COLUMN_GENERIC_VALUE) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null) && (mydb.getAllGenericDataFromUser(id).get(i+1).length() > 0)) {
+                counter1++;
                 genericValueString = mydb.getAllGenericDataFromUser(id).get(i + 1);
-                DataPoint point = new DataPoint(i, Double.parseDouble(genericValueString));
-                genericdata.appendData(point, true, i);
+                DataPoint point = new DataPoint(counter1, Double.parseDouble(genericValueString));
+                genericdata.appendData(point, true, counter1);
             }
             /*
-            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_GENERIC) && (mydb.getAllWeightDataFromUser(id).get(i+1) != null)){
+            else if ((temp == MHEALTH_COLUMN_LAST_READ_TIME_GENERIC) && (mydb.getAllGenericDataFromUser(id).get(i+1) != null) && (mydb.getAllGenericDataFromUser(id).get(i+1).length() > 0)){
                 gdateString = mydb.getAllGenericDataFromUser(id).get(i+1);
                 DataPoint point = new DataPoint(i, Double.parseDouble(gdateString));
                 genericdata.appendData(point, true, i);
@@ -274,36 +293,43 @@ public class UserActivity extends Activity{
         graph1.getLegendRenderer().setTextSize(25);
         graph1.getLegendRenderer().setTextColor(Color.BLACK);
         graph1.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph1.getViewport().setScalable(true);
 
         graph2.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         graph2.getLegendRenderer().setVisible(true);
         graph2.getLegendRenderer().setTextSize(25);
         graph2.getLegendRenderer().setTextColor(Color.BLACK);
         graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph2.getViewport().setScalable(true);
 
         graph3.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         graph3.getLegendRenderer().setVisible(true);
         graph3.getLegendRenderer().setTextSize(25);
         graph3.getLegendRenderer().setTextColor(Color.BLACK);
         graph3.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph3.getViewport().setScalable(true);
 
         graph4.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         graph4.getLegendRenderer().setVisible(true);
         graph4.getLegendRenderer().setTextSize(25);
         graph4.getLegendRenderer().setTextColor(Color.BLACK);
         graph4.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph4.getViewport().setScalable(true);
 
         graph5.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         graph5.getLegendRenderer().setVisible(true);
         graph5.getLegendRenderer().setTextSize(25);
         graph5.getLegendRenderer().setTextColor(Color.BLACK);
         graph5.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph5.getViewport().setScalable(true);
 
-        weightdata.setSpacing(50);
-        bpmdata1.setSpacing(50);
-        bpmdata2.setSpacing(50);
-        bpmdata3.setSpacing(50);
-        genericdata.setSpacing(50);
+
+        weightdata.setSpacing(100);
+        bpmdata1.setSpacing(100);
+        bpmdata2.setSpacing(100);
+        bpmdata3.setSpacing(100);
+        genericdata.setSpacing(100);
+
 
         weightdata.setDrawValuesOnTop(true);
         bpmdata1.setDrawValuesOnTop(true);
@@ -380,6 +406,12 @@ public class UserActivity extends Activity{
         super.onOptionsItemSelected(item);
         switch(item.getItemId()) {
 
+            //FHIR menu clicked:
+            case R.id.menu_fhir:
+                Intent intent = new Intent(this, PatientActivity.class);
+                this.startActivity(intent);
+                return true;
+
             //Edit user menu item clicked:
             case R.id.edit_user:
                 Button b = findViewById(R.id.buttonSaveUser2);
@@ -395,7 +427,7 @@ public class UserActivity extends Activity{
                 b.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
-                        if (email.getText().toString() != null){
+                        if (email.getText().toString().length() > 0){
                             //save it and go to main screen
                             mydb.updateMhealthUserMail(id, email.getText().toString());
                             Toast.makeText(getApplicationContext(), "Updated E-Mail!",
@@ -415,44 +447,46 @@ public class UserActivity extends Activity{
             case R.id.delete_user:
 
                 //Show Warning message
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.delete_contact)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage(R.string.delete_contact);
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int idd) {
+                                //Delete DB
                                 mydb.deleteUser(id);
-                                Toast.makeText(getApplicationContext(), "User deleted successfully",
-                                        Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),UserAddActivity.class);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
+                                try {
+                                    // clearing app data
+                                    if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
+                                        ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
+                                    } else {
+                                        String packageName = getApplicationContext().getPackageName();
+                                        Runtime runtime = Runtime.getRuntime();
+                                        runtime.exec("pm clear "+packageName);
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                dialog.cancel();
                             }
                         });
 
-                AlertDialog d = builder.create();
-                d.setTitle("Are you sure?");
-                d.show();
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int idd) {
+                                dialog.cancel();
+                            }
+                        });
 
-                //Clear app data:
-                try {
-                    // clearing app data
-                    if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
-                        ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
-                    } else {
-                        String packageName = getApplicationContext().getPackageName();
-                        Runtime runtime = Runtime.getRuntime();
-                        runtime.exec("pm clear "+packageName);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
 
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 

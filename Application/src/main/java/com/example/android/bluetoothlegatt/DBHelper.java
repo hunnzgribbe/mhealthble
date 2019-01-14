@@ -16,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String MHEALTH_TABLE_USER = "mhealthuser";
     public static final String MHEALTH_TABLE_VALUES = "mhealthvalues";
     public static final String MHEALTH_COLUMN_ID_USER = "userid";
+    public static final String MHEALTH_COLUMN_ID_PATIENT = "patientid";
     public static final String MHEALTH_COLUMN_ID_VALUES = "valuesid";
     public static final String MHEALTH_COLUMN_EMAIL = "email";
     public static final String MHEALTH_COLUMN_PATIENT_ID = "patientid";
@@ -78,7 +79,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert("mhealthuser", null, contentValues1);
         return true;
     }
-
 
     //Insert new values (weight and bpm) into db
     public boolean insertMhealthValues (int userid, String weightunit, String weightvalue, String bpunit, String systolic, String diastolic, String map, String pulse, String date) {
@@ -159,7 +159,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateMhealthUserMail (Integer id, String email) {
+    public boolean updateMhealthUserMail (int id, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
@@ -167,7 +167,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateMhealthUserPatientid (Integer id, String patientid) {
+    public boolean updateMhealthUserPatientid (int id, String patientid) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("patientid", patientid);
@@ -223,7 +223,6 @@ public class DBHelper extends SQLiteOpenHelper {
     //Get an Arraylist for specific Data (Weight, bpm and generic) from specific user
     public ArrayList<String> getAllWeightDataFromUser(int id) {
         ArrayList<String> array_list = new ArrayList<String>();
-//TODO weitermahen 10.01
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from mhealthuser left join mhealthvaluesweight on mhealthuser.userid=mhealthvaluesweight.userid where mhealthuser.userid=?", new String[] { Integer.toString(id) } );
 
@@ -250,9 +249,40 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
+    //Get an Arraylist for last specific Data (Weight) from specific user, some methods are following
+    public ArrayList<String> getLastWeightDataFromUser(int id) {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from mhealthuser left join mhealthvaluesweight on mhealthuser.userid=mhealthvaluesweight.userid where mhealthuser.userid=?", new String[] { Integer.toString(id) } );
+
+        if (res.moveToLast()) {
+            do {
+
+                if(res.getColumnIndex(MHEALTH_COLUMN_WEIGHT_UNIT) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_WEIGHT_UNIT);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_WEIGHT_UNIT)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_WEIGHT_VALUE) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_WEIGHT_VALUE);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_WEIGHT_VALUE)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_LAST_READ_TIME_WEIGHT) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_LAST_READ_TIME_WEIGHT);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_LAST_READ_TIME_WEIGHT)));
+                }
+
+            } while (res.moveToNext());
+        }
+
+        res.close();
+        return array_list;
+    }
+
+    //Get all BPM Data from user
     public ArrayList<String> getAllBPMDataFromUser(int id) {
         ArrayList<String> array_list = new ArrayList<String>();
-//TODO weitermahen 10.01
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from mhealthuser left join mhealthvaluesbpm on mhealthuser.userid=mhealthvaluesbpm.userid where mhealthuser.userid=?", new String[] { Integer.toString(id) } );
 
@@ -291,6 +321,47 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
+    //Get last BPM Data from user
+    public ArrayList<String> getLastBPMDataFromUser(int id) {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from mhealthuser left join mhealthvaluesbpm on mhealthuser.userid=mhealthvaluesbpm.userid where mhealthuser.userid=?", new String[] { Integer.toString(id) } );
+
+        if (res.moveToLast()) {
+            do {
+
+                if(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_UNIT)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_MAP) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_BLOOD_PRESSURE_MAP);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_MAP)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE)));
+                }
+                if(res.getColumnIndex(MHEALTH_COLUMN_LAST_READ_TIME_BPM) > 0 ){
+                    array_list.add(MHEALTH_COLUMN_LAST_READ_TIME_BPM);
+                    array_list.add(res.getString(res.getColumnIndex(MHEALTH_COLUMN_LAST_READ_TIME_BPM)));
+                }
+
+            } while (res.moveToNext());
+        }
+
+        res.close();
+        return array_list;
+    }
 
     public ArrayList<String> getAllGenericDataFromUser(int id) {
         ArrayList<String> array_list = new ArrayList<String>();
@@ -329,7 +400,9 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery( "select * from mhealthuser", null );
 
         res.moveToLast();
+
         tempid = res.getInt(res.getColumnIndex(MHEALTH_COLUMN_ID_USER));
+        res.close();
         return tempid;
     }
 

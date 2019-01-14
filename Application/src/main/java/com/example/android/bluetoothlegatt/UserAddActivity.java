@@ -37,19 +37,9 @@ public class UserAddActivity extends Activity {
 
                     //Insert a new user in the db
                     mydb.insertMhealthUser(email.getText().toString());
-                    //Fill the Tables with a emptyset
-                    mydb.insertMhealthValuesBpm(mydb.getLastUsersId(), "","","","","","" );
-                    mydb.insertMhealthValuesWeight(mydb.getLastUsersId(),"","","");
-                    mydb.insertMhealthValuesGeneric(mydb.getLastUsersId(),"","","");
 
                     Toast.makeText(getApplicationContext(), "Done",
                             Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(getApplicationContext(), mydb.getAllUsers().toString(),
-                            Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), mydb.getLastUsersId().toString(),
-                            Toast.LENGTH_SHORT).show();
-
                     finish();
 
 

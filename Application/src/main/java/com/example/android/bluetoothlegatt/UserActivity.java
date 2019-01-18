@@ -19,11 +19,11 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import static com.example.android.bluetoothlegatt.DBHelper.*;
 
 //User Activity, accessed from the options menu
-//Primary for displaying the values and changing username
+//Primary for displaying the values (grahpics and table) and changing username
+
 public class UserActivity extends Activity{
 
     private DBHelper mydb;
@@ -330,7 +330,6 @@ public class UserActivity extends Activity{
         bpmdata3.setSpacing(100);
         genericdata.setSpacing(100);
 
-
         weightdata.setDrawValuesOnTop(true);
         bpmdata1.setDrawValuesOnTop(true);
         bpmdata2.setDrawValuesOnTop(true);
@@ -406,13 +405,13 @@ public class UserActivity extends Activity{
         super.onOptionsItemSelected(item);
         switch(item.getItemId()) {
 
-            //FHIR menu clicked:
+            //FHIR entry clicked:
             case R.id.menu_fhir:
                 Intent intent = new Intent(this, PatientActivity.class);
                 this.startActivity(intent);
                 return true;
 
-            //Edit user menu item clicked:
+            //Edit user menu entry clicked:
             case R.id.edit_user:
                 Button b = findViewById(R.id.buttonSaveUser2);
                 b.setVisibility(View.VISIBLE);
@@ -442,7 +441,7 @@ public class UserActivity extends Activity{
 
                 return true;
 
-            //Delete user menu item clicked:
+            //Delete user menu entry clicked:
             //DB gets deleted as well as app data
             case R.id.delete_user:
 

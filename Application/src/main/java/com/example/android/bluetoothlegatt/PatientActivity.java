@@ -6,18 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.hl7.fhir.dstu3.model.Coding;
-import org.hl7.fhir.dstu3.model.DateType;
 import org.hl7.fhir.dstu3.model.Observation;
-import org.hl7.fhir.dstu3.model.Parameters;
 import org.hl7.fhir.dstu3.model.Patient;
 import org.hl7.fhir.dstu3.model.Quantity;
-
-import java.util.concurrent.ThreadLocalRandom;
-
-import ca.uhn.fhir.model.api.annotation.SimpleSetter;
-
 import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_BLOOD_PRESSURE_DIASTOLIC;
 import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_BLOOD_PRESSURE_PULSE;
 import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_BLOOD_PRESSURE_SYSTOLIC;
@@ -28,6 +20,8 @@ import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_LAST_R
 import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_PATIENT_ID;
 import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_WEIGHT_UNIT;
 import static com.example.android.bluetoothlegatt.DBHelper.MHEALTH_COLUMN_WEIGHT_VALUE;
+
+//Activity for patients screen, from here you can change patientid, server and upload data to fhir server
 
 public class PatientActivity  extends Activity {
 
@@ -60,7 +54,6 @@ public class PatientActivity  extends Activity {
     private boolean weightset1;
     private boolean weightset2;
 
-//TODO hier weiter 11.1.19
     //Gets called at opening the activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +121,7 @@ public class PatientActivity  extends Activity {
         //Give the patient the name from the databaseusername
         patient.addName().addGiven(emailString);
 
+        //Set observation for weight data
         observationw.setStatus(Observation.ObservationStatus.FINAL);
         //Read out Arraylist for the WeightData
         for (int i = 0; i < mydb.getLastWeightDataFromUser(id).size(); i++){
@@ -162,7 +156,7 @@ public class PatientActivity  extends Activity {
         observationb2.setStatus(Observation.ObservationStatus.FINAL);
         observationb3.setStatus(Observation.ObservationStatus.FINAL);
         observationb4.setStatus(Observation.ObservationStatus.FINAL);
-        //Read out Arraylist for the BPMData
+        //Read out Arraylist for the BPMData and set Observation for it
         for (int i = 0; i < mydb.getLastBPMDataFromUser(id).size(); i++){
             String temp = mydb.getLastBPMDataFromUser(id).get(i);
 
@@ -225,7 +219,6 @@ public class PatientActivity  extends Activity {
         }
 
 
-
         //Click listener for Save Patientid button
         bpatientid.setOnClickListener(new View.OnClickListener() {
 
@@ -261,7 +254,7 @@ public class PatientActivity  extends Activity {
             }
         });
 
-        //Click listener for buttons
+        //Click listener for fhir upload button
         bupload.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -270,7 +263,6 @@ public class PatientActivity  extends Activity {
                 fhirHelper.uploadPatientData(patient, observationb1, serverurl);
                 fhirHelper.uploadPatientData(patient, observationb2, serverurl);
                 fhirHelper.uploadPatientData(patient, observationb3, serverurl);
-                //fhirHelper.getPatients();
 
                 Toast.makeText(getApplicationContext(), "Uploaded!",
                             Toast.LENGTH_SHORT).show();

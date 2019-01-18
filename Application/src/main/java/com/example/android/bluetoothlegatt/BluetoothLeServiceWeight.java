@@ -26,7 +26,6 @@ public class BluetoothLeServiceWeight extends BluetoothLeService {
     }
 
     //Setter methods
-    //Later, you would set the following setter methods private
     public void setWEIGHT_UNIT(String weightUnit){
         this.WEIGHT_UNIT = weightUnit;
     }

@@ -37,7 +37,6 @@ import android.os.IBinder;
 import android.util.Log;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -147,6 +146,7 @@ public class BluetoothLeService extends Service {
 
 //TODO: Read and save A&DDevices
         //Calls instances of the Sub Classes and after getting the data, its getting stored in the database
+        //Gets called, as soon the state of the connection changed and action data is available
 
         //For Weight scale
         if (UUID_WEIGHT_MEASUREMENT.equals(characteristic.getUuid())) {

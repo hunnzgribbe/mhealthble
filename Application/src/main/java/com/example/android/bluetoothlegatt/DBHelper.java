@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 
-//Database class for storing the information
+//Database helper class for storing the data
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "mHealth.db";
@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME , null, 1);
     }
 
-    //Create db
+    //Create db with tables
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -220,7 +220,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
-    //Get an Arraylist for specific Data (Weight, bpm and generic) from specific user
+    //Get an Arraylist for all specific Data (Weight) from specific user
     public ArrayList<String> getAllWeightDataFromUser(int id) {
         ArrayList<String> array_list = new ArrayList<String>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -363,6 +363,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
+    //Get all generic data from user
     public ArrayList<String> getAllGenericDataFromUser(int id) {
         ArrayList<String> array_list = new ArrayList<String>();
 //TODO weitermahen 10.01

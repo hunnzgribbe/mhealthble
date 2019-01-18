@@ -35,7 +35,6 @@ import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +44,7 @@ import java.util.UUID;
  * For a selected BLE device, this Activity provides the user interface to connect, display data,
  * and display GATT services and characteristics supported by the device.  The Activity
  * communicates with {@code BluetoothLeService}, which in turn interacts with the
- * Bluetooth LE API.
+ * Bluetooth LE API. For Known Devices, the data gets read out automatically.
  */
 
 public class DeviceControlActivity extends Activity {

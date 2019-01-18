@@ -3,8 +3,6 @@ package com.example.android.bluetoothlegatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.util.UUID;
 
 
@@ -37,7 +35,6 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
     }
 
     //Setter methods
-    //Later, you would set the following setter methods private
     public void setBP_UNIT(String bloodunit){
         this.BLOOD_PRESSURE_UNIT = bloodunit;
     }
@@ -93,7 +90,6 @@ public class BluetoothLeServiceBloodPressure extends BluetoothLeService {
     public void readValues (final Intent intent, final BluetoothGattCharacteristic characteristic){
 
         //Data handling for blood pressure device:
-        //Obtained from A&D Github project
         if (UUID_BLOOD_PRESSURE_MEASUREMENT.equals(characteristic.getUuid())) {
 
             int flag = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);

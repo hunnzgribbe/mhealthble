@@ -58,7 +58,7 @@ public class DeviceScanActivity extends ListActivity {
     private Handler mHandler;
     private static final int REQUEST_PERMISSION_LOCATION = 1;
     private static final int REQUEST_PERMISSION_ENABLE_BT = 1;
-    // Stops scanning for ble devices after 10 seconds.
+    // Stops scanning for ble devices after 20 seconds.
     private static final long SCAN_PERIOD = 20000;
     DBHelper mydb;
     private int id;
@@ -178,7 +178,7 @@ public class DeviceScanActivity extends ListActivity {
                         });
 
 
-//TODO: Here is the Activity called for setting a new user, if not already created
+//TODO: Here is the Activity called for setting up a new user, if not already created
                 //When you delete the user whithin the app or clear the data of the app, you have to make a new user
                 Intent intent = new Intent(this, UserAddActivity.class);
                 this.startActivity(intent);

@@ -1,26 +1,20 @@
 package com.example.android.bluetoothlegatt;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.os.StrictMode;
-import android.util.Log;
 
+import android.os.StrictMode;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.dstu3.model.Observation;
-import org.hl7.fhir.dstu3.model.Parameters;
 import org.hl7.fhir.dstu3.model.Patient;
-import org.hl7.fhir.dstu3.model.Quantity;
 import org.hl7.fhir.dstu3.model.Reference;
 import java.util.List;
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.model.api.annotation.SimpleSetter;
-import ca.uhn.fhir.model.primitive.IdDt;
 import ca.uhn.fhir.okhttp.client.OkHttpRestfulClientFactory;
-import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.client.api.ServerValidationModeEnum;
 import ca.uhn.fhir.rest.gclient.TokenClientParam;
 import ca.uhn.fhir.util.BundleUtil;
 
+//Class for handling fhir server connection
 
 public class PatientFhirHelper {
 
@@ -28,6 +22,7 @@ public class PatientFhirHelper {
     private FhirContext ctx;
     private String serverurl = "http://fhirtest.uhn.ca/baseDstu3";
 
+    //Initialize server connection
     public PatientFhirHelper() {
         ctx = FhirContext.forDstu3();
         // Use OkHttp
@@ -38,6 +33,7 @@ public class PatientFhirHelper {
         StrictMode.setThreadPolicy(policy);
     }
 
+    //Get a list of patients
     public List<Patient> getPatients() {
         // Invoke the client
         Bundle bundle = client.search().forResource(Patient.class)
@@ -61,6 +57,7 @@ public class PatientFhirHelper {
         return client;
     }
 
+    //Method for uploading patient data (patientid and observation) to fhir server
     public void uploadPatientData (Patient patient, Observation observation, String server){
 
         //Reference data to patient
